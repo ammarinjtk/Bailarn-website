@@ -1,26 +1,99 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+
+import "./App.css";
+import "./simple-sidebar.css";
+
+import { BrowserRouter, Route } from "react-router-dom";
+import TokenizerUI from "./components/tokenizer";
+import WordEmbedderUI from "./components/word-embedder";
+import NERUI from "./components/ner";
+import PosUI from "./components/pos";
+import NavBar from "./components/nav_bar";
+import MenuUI from "./components/menu";
+import KeywordExpansionUI from "./components/keyword_expansion";
+import SentimentUI from "./components/sentiment";
+import TextClassifyUI from "./components/text_classify";
+import AboutUI from "./components/about";
+import HomeUI from "./components/home";
 
 class App extends Component {
+  footer() {
+    return (
+      <div>
+        <div
+          style={{
+            display: "block",
+            padding: "20px",
+            height: "60px",
+            width: "100%"
+          }}
+        />
+        <div
+          class="footer c1 mt-4"
+          style={{
+            borderTop: "1px solid #E7E7E7",
+            textAlign: "center",
+            padding: "20px",
+            position: "fixed",
+            left: "0",
+            bottom: "0",
+            height: "60px",
+            width: "100%"
+          }}
+        />
+      </div>
+    );
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <div>
+          <div class="row" style={{ height: "51px" }}>
+            <div class="col-md-12">
+              <NavBar />
+            </div>
+          </div>
+          <div class="row" id="wrapper">
+            <MenuUI
+              head={["Foundation", "Application"]}
+              detail={[
+                {
+                  Tokenization: "/tokenization",
+                  "Word Embedding": "/word-embedding",
+                  "Named Entity Recognition": "/ner",
+                  "Part of Speech Tagging": "/pos"
+                },
+                {
+                  "Sentiment Analysis": "/sentiment-analyzer",
+                  "Text Categorization": "/text-categorization"
+                }
+              ]}
+            />
+            <div
+              class="col page-content-wrapper"
+              style={{ "padding-top": "15px" }}
+            >
+              <Route exact path="/tokenization" component={TokenizerUI} />
+              <Route exact path="/word-embedding" component={WordEmbedderUI} />
+
+              <Route exact path="/ner" component={NERUI} />
+              <Route exact path="/pos" component={PosUI} />
+
+              <Route
+                exact
+                path="/text-categorization"
+                component={TextClassifyUI}
+              />
+              <Route exact path="/sentiment-analyzer" component={SentimentUI} />
+
+              <Route exact path="/about" component={AboutUI} />
+              {/* <Route exact path="/thainlp" component={HomeUI} /> */}
+              <Route exact path="/" component={HomeUI} />
+            </div>
+          </div>
+        </div>
+      </BrowserRouter>
     );
   }
 }
