@@ -43,7 +43,7 @@ class TokenizerUI extends Component {
   load = async () => {
     console.log("Loading model!");
     this.tokenizer_model = await tf.loadModel(
-      "https://raw.githubusercontent.com/ammarinjtk/thainlp/master/src/models/tokenizer/model.json"
+      "https://raw.githubusercontent.com/ammarinjtk/thai-nlp/master/src/models/tokenizer/model.json"
     );
     console.log("Loading model Successful!");
     // console.log(this.tokenizer_model.summary());

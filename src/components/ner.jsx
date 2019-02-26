@@ -88,7 +88,7 @@ class NerUI extends Component {
   load_tokenizer = async () => {
     console.log("Loading tokenizer model!");
     this.tokenizer_model = await tf.loadModel(
-      "https://raw.githubusercontent.com/ammarinjtk/thainlp/master/src/models/tokenizer/model.json"
+      "https://raw.githubusercontent.com/ammarinjtk/thai-nlp/master/src/models/tokenizer/model.json"
     );
     console.log("Loading tokenizer model Successful!");
     // console.log(this.tokenizer_model.summary());
@@ -96,7 +96,7 @@ class NerUI extends Component {
 
   load_word_index = async () => {
     fetch(
-      "https://raw.githubusercontent.com/ammarinjtk/thainlp/master/src/models/ner/ner_word_index.json"
+      "https://raw.githubusercontent.com/ammarinjtk/thai-nlp/master/src/models/ner/ner_word_index.json"
     )
       .then(res => res.json())
       .then(out => {
@@ -111,7 +111,7 @@ class NerUI extends Component {
   load_ner = async () => {
     console.log("Loading NER model!");
     this.ner_model = await tf.loadModel(
-      "https://raw.githubusercontent.com/ammarinjtk/thainlp/master/src/models/ner/model.json"
+      "https://raw.githubusercontent.com/ammarinjtk/thai-nlp/master/src/models/ner/model.json"
     );
     console.log("Loading NER model Successful!");
     // console.log(this.ner_model.summary());

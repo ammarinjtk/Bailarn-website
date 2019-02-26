@@ -50,7 +50,7 @@ class WordEmbedderUI extends Component {
 
   load_word_index = async () => {
     fetch(
-      "https://raw.githubusercontent.com/ammarinjtk/thainlp/master/src/models/word_embedder/word_embedder_word_index.json"
+      "https://raw.githubusercontent.com/ammarinjtk/thai-nlp/master/src/models/word_embedder/word_embedder_word_index.json"
     )
       .then(res => res.json())
       .then(out => {
@@ -64,7 +64,7 @@ class WordEmbedderUI extends Component {
   load_word_embedder = async () => {
     console.log("Loading word embedder model!");
     this.word_embedder_model = await tf.loadModel(
-      "https://raw.githubusercontent.com/ammarinjtk/thainlp/master/src/models/word_embedder/model.json"
+      "https://raw.githubusercontent.com/ammarinjtk/thai-nlp/master/src/models/word_embedder/model.json"
     );
     console.log("Loading word embedder successful!");
     this.setState({ isReady: true });

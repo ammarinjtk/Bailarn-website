@@ -53,7 +53,7 @@ class PosUI extends Component {
   load_tokenizer = async () => {
     console.log("Loading tokenizer model!");
     this.tokenizer_model = await tf.loadModel(
-      "https://raw.githubusercontent.com/ammarinjtk/thainlp/master/src/models/tokenizer/model.json"
+      "https://raw.githubusercontent.com/ammarinjtk/thai-nlp/master/src/models/tokenizer/model.json"
     );
     console.log("Loading tokenizer model Successful!");
     // console.log(this.tokenizer_model.summary());
@@ -61,7 +61,7 @@ class PosUI extends Component {
 
   load_word_index = async () => {
     fetch(
-      "https://raw.githubusercontent.com/ammarinjtk/thainlp/master/src/models/pos/pos_word_index.json"
+      "https://raw.githubusercontent.com/ammarinjtk/thai-nlp/master/src/models/pos/pos_word_index.json"
     )
       .then(res => res.json())
       .then(out => {
@@ -75,7 +75,7 @@ class PosUI extends Component {
   load_pos = async () => {
     console.log("Loading POS model!");
     this.pos_model = await tf.loadModel(
-      "https://raw.githubusercontent.com/ammarinjtk/thainlp/master/src/models/pos/model.json"
+      "https://raw.githubusercontent.com/ammarinjtk/thai-nlp/master/src/models/pos/model.json"
     );
     console.log("Loading POS model Successful!");
     this.setState({ isReady: true });
