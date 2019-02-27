@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-no-duplicate-props */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
 import "./nav_bar.css";
 import classNames from "classnames";
@@ -19,10 +21,10 @@ class NavBar extends Component {
     this.setState({ active_api: false, active_about: true });
   }
   render() {
-    const classes = classNames({
-      "nav-item": true,
-      active: this.state.active_api // only add this class if the state says so
-    });
+    // const classes = classNames({
+    //   "nav-item": true,
+    //   active: this.state.active_api // only add this class if the state says so
+    // });
     const classes2 = classNames({
       "nav-item": true,
       active: this.state.active_about // only add this class if the state says so
@@ -72,7 +74,6 @@ class NavBar extends Component {
         </div>
         <div class="text-white right" id="nav-item-list" id="navbarButton">
           <ul class="navbar-nav mr-auto">
-
             <li
               className={classes2}
               onClick={() => this.setAboutActive()}

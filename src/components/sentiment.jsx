@@ -1,9 +1,14 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import Loading from "react-loading-components";
+// import { connect } from "react-redux";
+// import { bindActionCreators } from "redux";
+// import Loading from "react-loading-components";
 
-import { sentiment } from "../action/index";
+// import { sentiment } from "../action/index";
+
+import * as tf from "@tensorflow/tfjs";
+import * as utils from "../utils/utils";
+import * as sentiment_constant from "../utils/sentiment";
+import * as tokenizer_constant from "../utils/tokenizer";
 
 import {
   Bar,
@@ -13,7 +18,7 @@ import {
   Tooltip,
   CartesianGrid,
   ResponsiveContainer,
-  Cell,
+  Cell
 } from "recharts";
 
 import ResultUI from "./result";
@@ -37,22 +42,169 @@ class SentimentUI extends Component {
       ],
       inputType: "",
       old_output: null,
-      outputStatus: 1
+      outputStatus: 1,
+      token_list: [],
+      confidence_tag_list: [],
+      isReady: false
     };
 
     this.setInput = this.setInput.bind(this);
+    this.char_index = utils.build_tag_index(
+      tokenizer_constant.CHARACTER_LIST,
+      tokenizer_constant.CHAR_START_INDEX
+    );
+    this.tag_index = utils.build_tag_index(sentiment_constant.TAG_LIST, 0);
+    this.tokenizer_model = this.load_tokenizer();
+    this.sentiment_model = this.load_sentiment();
+    this.word_index = this.load_word_index();
   }
+
+  load_tokenizer = async () => {
+    console.log("Loading tokenizer model!");
+    this.tokenizer_model = await tf.loadModel(
+      "https://raw.githubusercontent.com/ammarinjtk/thai-nlp/dev/src/models/tokenizer/model.json"
+    );
+    console.log("Loading tokenizer model Successful!");
+    // console.log(this.tokenizer_model.summary());
+  };
+
+  load_word_index = async () => {
+    fetch(
+      "https://raw.githubusercontent.com/ammarinjtk/thai-nlp/dev/src/models/sentiment/sentiment_word_index.json"
+    )
+      .then(res => res.json())
+      .then(out => {
+        this.word_index = out;
+        console.log("Index for UNK word: ", this.word_index["UNK"]);
+        console.log("Index for PAD word: ", this.word_index["<PAD>"]);
+      })
+      .catch(err => console.error(err));
+  };
+
+  load_sentiment = async () => {
+    console.log("Loading sentiment model!");
+    this.sentiment_model = await tf.loadModel(
+      "https://raw.githubusercontent.com/ammarinjtk/thai-nlp/dev/src/models/sentiment/model.json"
+    );
+    console.log("Loading sentiment model Successful!");
+    this.setState({ isReady: true });
+  };
+
+  tokenize = async (tokenizer_model, char_index, word) => {
+    var x = [];
+    var readable_x = [];
+
+    for (var i = 0; i < word.length; i++) {
+      var char = word[i];
+      if (char in char_index) {
+        x.push(char_index[char]);
+      } else {
+        x.push(tokenizer_constant.UNKNOW_CHAR_INDEX);
+      }
+      readable_x.push(char);
+    }
+
+    // padding
+    x = utils.pad(
+      [x],
+      tokenizer_constant.SEQUENCE_LENGTH,
+      tokenizer_constant.PAD_CHAR_INDEX
+    );
+    readable_x = utils.pad(
+      [readable_x],
+      tokenizer_constant.SEQUENCE_LENGTH,
+      tokenizer_constant.READABLE_PAD_CHAR
+    );
+
+    // casting
+    x = tf.tensor2d(x);
+
+    const output = tokenizer_model.predict(x);
+
+    var y_pred = output.argMax(2);
+    y_pred = y_pred.flatten();
+
+    var all_result = [];
+    for (var sample_idx = 0; sample_idx < readable_x[0].length; sample_idx++) {
+      var label = y_pred.get([sample_idx]);
+      char = readable_x[0][sample_idx];
+
+      // Pad label
+      if (label === tokenizer_constant.PAD_TAG_INDEX) continue;
+      // Pad char
+      if (char === tokenizer_constant.READABLE_PAD_CHAR) continue;
+
+      all_result.push(char);
+
+      // Skip tag for spacebar character
+      if (char === tokenizer_constant.SPACEBAR) continue;
+
+      // Tag at segmented point
+      if (label !== tokenizer_constant.NON_SEGMENT_TAG_INDEX) {
+        all_result.push("|");
+      }
+    }
+    console.log(all_result.join(""));
+
+    return all_result
+      .join("")
+      .split("|")
+      .filter(function(el) {
+        return el !== "";
+      });
+  };
+
+  getSentiment = async (sentiment_model, word_index, tokens) => {
+    var x = [];
+    var readable_x = [];
+
+    for (var i = 0; i < tokens.length; i++) {
+      var word = tokens[i];
+      if (word in word_index) {
+        x.push(word_index[word]);
+      } else {
+        x.push("UNK");
+      }
+      readable_x.push(word);
+    }
+    // console.log(x);
+    // padding
+    x = utils.pad([x], sentiment_constant.SEQUENCE_LENGTH, 0);
+    // readable_x = utils.pad([readable_x], ner_utils.SEQUENCE_LENGTH, "PAD");
+    console.log(x);
+
+    x = tf.tensor2d(x);
+
+    var output = sentiment_model.predict(x);
+    // console.log(output);
+    var y_pred = output.dataSync();
+    console.log(y_pred);
+
+    return y_pred;
+  };
 
   handleSubmit = e => {
     e.preventDefault();
-    this.setState({ outputStatus: 1 });
+    console.log("hit");
+    console.log(this.state.inputValue);
+
     this.setState({
-      inputType: typeOfInputValue(this.state.inputValue)
+      inputType: typeOfInputValue(this.state.inputValue) // URL or TEXT
     });
-    console.log(this.props.sentimentValue)
-    if (this.state.inputValue !== "") {
-      this.props.sentiment(this.state.inputType, this.state.inputValue,'MOCK');
-      this.setState({ isShowOutput: true });
+
+    if (this.state.inputValue !== "" && this.state.inputType === "TEXT") {
+      var val = this.state.inputValue;
+      this.tokenize(this.tokenizer_model, this.char_index, val).then(words => {
+        // this.setState({ wordList: words, isShowOutput: true });
+        this.setState({ token_list: words });
+        this.getSentiment(
+          this.sentiment_model,
+          this.word_index,
+          this.state.token_list
+        ).then(tags => {
+          this.setState({ confidence_tag_list: tags, isShowOutput: true });
+        });
+      });
     }
   };
 
@@ -70,61 +222,52 @@ class SentimentUI extends Component {
   }
 
   genGraph() {
-    const status = this.props.sentimentValue.status;
-    const data = this.props.sentimentValue.data;
-    if (status === "OK") {
-      if (this.state.old_output !== data) this.setState({
-          old_output: data
-        });
-
-      let sentimentValue = this.props.sentimentValue.data.confidence_tag_list;
-      console.log(sentimentValue[0]);
-      let datao = [{ 
-        key: "positive", 
-        value: Number(sentimentValue[1].confidence.toFixed(4)) }, 
-        // { key: "neutral", 
-        // value: Number(sentimentValue[2].confidence.toFixed(4)) }, 
-        { key: "negative", 
-        value: Number(sentimentValue[0].confidence.toFixed(4)) }];
-      return <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={datao}>
-            <XAxis dataKey="key" />
-            <YAxis yAxisId="a" dataKey="value" type="number" domain={[0, 1]} />
-
-            <Tooltip />
-            <CartesianGrid vertical={false} />
-            <Bar yAxisId="a" dataKey="value">
-              <Cell key="cell-1" fill="#41f47f" />
-              <Cell key="cell-2" fill="#f44242" />
-              <Cell key="cell-3" fill="#f44242" />
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>;
-    } else if (status === "ERROR") {
-      if (this.state.old_output !== data) this.setState({
-          old_output: data
-        });
-      console.log(this.state.outputStatus);
-      return <h1> {data}</h1>;
-    }
-        
-      
-  }
-  loading() {
-    const status = this.props.sentimentValue.status;
-    if (status) {
-      console.log(status);
-      console.log(this.state.old_output);
-      if (this.state.old_output !== this.props.sentimentValue.data) {
-        console.log(this.state.old_output);
-        console.log(this.props.sentimentValue.data);
-        this.setState({ outputStatus: 2 });
-        console.log(this.state.outputStatus);
+    // console.log(this.state.confidence_tag_list[0]);
+    // console.log(this.state.confidence_tag_list[1]);
+    let datao = [
+      {
+        key: "positive",
+        value: Number(this.state.confidence_tag_list[1].toFixed(4))
+      },
+      {
+        key: "negative",
+        value: Number(this.state.confidence_tag_list[0].toFixed(4))
       }
-    }
+    ];
     return (
-      <Loading type="ball_triangle" width={100} height={100} fill="#f44242" />
+      <ResponsiveContainer width="100%" height={300}>
+        <BarChart data={datao}>
+          <XAxis dataKey="key" />
+          <YAxis yAxisId="a" dataKey="value" type="number" domain={[0, 1]} />
+
+          <Tooltip />
+          <CartesianGrid vertical={false} />
+          <Bar yAxisId="a" dataKey="value">
+            <Cell key="cell-1" fill="#41f47f" />
+            <Cell key="cell-2" fill="#f44242" />
+            <Cell key="cell-3" fill="#f44242" />
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
     );
+  }
+
+  genJSONData() {
+    var json = {
+      token_list: this.state.token_list,
+      confidence_tag_list: this.state.confidence_tag_list
+    };
+    return json;
+  }
+
+  isReady() {
+    if (!this.state.isReady) {
+      console.log("Not ready!");
+      return true;
+    } else {
+      console.log("Ready!");
+      return false;
+    }
   }
 
   render() {
@@ -133,12 +276,10 @@ class SentimentUI extends Component {
         <div class="row">
           <div class="col-12">
             <ExplainUI
-              topic={
-                <div>
-                  Sentiment Analysis
-                </div>
+              topic={<div>Sentiment Analysis</div>}
+              dropdown={
+                <DropdownUI style={{ width: "150px" }} options={["food"]} />
               }
-              dropdown={<DropdownUI style={{'width':'150px'}}options={['food','mobile']} />}
               model_description="Predict the Sentiment of a document including Positive, Neutral and Negative sentiment. The model returns the probabilities of each sentiment class."
               explanation={
                 <div class="alert alert-success" role="alert">
@@ -169,6 +310,7 @@ class SentimentUI extends Component {
                 <button
                   type="button"
                   class="btn c2"
+                  disabled={this.isReady()}
                   onClick={this.handleSubmit}
                 >
                   Analyze
@@ -187,12 +329,8 @@ class SentimentUI extends Component {
             {this.state.isShowOutput ? (
               <ResultUI
                 isTextFormat={true}
-                textData={
-                  this.state.outputStatus === 1
-                    ? this.loading()
-                    : this.genGraph()
-                }
-                jsonData={this.props.sentimentValue.data}
+                textData={this.genGraph()}
+                jsonData={this.genJSONData()}
               />
             ) : (
               <div />
@@ -203,11 +341,11 @@ class SentimentUI extends Component {
     );
   }
 }
-const mapStateToProps = state => {
-  return { sentimentValue: state.sentimentValue };
-};
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ sentiment }, dispatch);
-};
+// const mapStateToProps = state => {
+//   return { sentimentValue: state.sentimentValue };
+// };
+// const mapDispatchToProps = dispatch => {
+//   return bindActionCreators({ sentiment }, dispatch);
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SentimentUI);
+export default SentimentUI;

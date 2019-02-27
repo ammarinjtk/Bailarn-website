@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import Loading from "react-loading-components";
+// import { connect } from "react-redux";
+// import { bindActionCreators } from "redux";
+// import Loading from "react-loading-components";
 
-import { POS } from "../action/index";
+// import { POS } from "../action/index";
 import ResultUI from "./result";
 import ExplainUI from "./explanation";
 import InputUI, { typeOfInputValue } from "./input";
@@ -118,7 +118,7 @@ class PosUI extends Component {
     var all_result = [];
     for (var sample_idx = 0; sample_idx < readable_x[0].length; sample_idx++) {
       var label = y_pred.get([sample_idx]);
-      var char = readable_x[0][sample_idx];
+      char = readable_x[0][sample_idx];
 
       // Pad label
       if (label === tokenizer_constant.PAD_TAG_INDEX) continue;
@@ -141,7 +141,7 @@ class PosUI extends Component {
       .join("")
       .split("|")
       .filter(function(el) {
-        return el != "";
+        return el !== "";
       });
   };
 
@@ -177,7 +177,7 @@ class PosUI extends Component {
     console.log(y_pred);
 
     var decoeded_y_pred = [];
-    for (var i = 0; i < readable_x.length; i++) {
+    for (i = 0; i < readable_x.length; i++) {
       decoeded_y_pred.push(inv_tag_index[y_pred[i]]);
     }
     return decoeded_y_pred;
@@ -325,16 +325,13 @@ class PosUI extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  console.log(state.wordList);
-  return { posTagList: state.posTagList };
-};
+// const mapStateToProps = state => {
+//   console.log(state.wordList);
+//   return { posTagList: state.posTagList };
+// };
 
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ POS }, dispatch);
-};
+// const mapDispatchToProps = dispatch => {
+//   return bindActionCreators({ POS }, dispatch);
+// };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PosUI);
+export default PosUI;

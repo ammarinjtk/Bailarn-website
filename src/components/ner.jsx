@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+// import { connect } from "react-redux";
+// import { bindActionCreators } from "redux";
 import ReactTooltip from "react-tooltip";
-import Loading from "react-loading-components";
+// import Loading from "react-loading-components";
 
-import { NER } from "../action/index";
+// import { NER } from "../action/index";
 import ResultUI from "./result";
 import ExplainUI from "./explanation";
 import InputUI, { typeOfInputValue } from "./input";
@@ -155,7 +155,7 @@ class NerUI extends Component {
     var all_result = [];
     for (var sample_idx = 0; sample_idx < readable_x[0].length; sample_idx++) {
       var label = y_pred.get([sample_idx]);
-      var char = readable_x[0][sample_idx];
+      char = readable_x[0][sample_idx];
 
       // Pad label
       if (label === tokenizer_constant.PAD_TAG_INDEX) continue;
@@ -178,7 +178,7 @@ class NerUI extends Component {
       .join("")
       .split("|")
       .filter(function(el) {
-        return el != "";
+        return el !== "";
       });
   };
 
@@ -214,7 +214,7 @@ class NerUI extends Component {
     console.log(y_pred);
 
     var decoeded_y_pred = [];
-    for (var i = 0; i < readable_x.length; i++) {
+    for (i = 0; i < readable_x.length; i++) {
       decoeded_y_pred.push(inv_tag_index[y_pred[i]]);
     }
     return decoeded_y_pred;

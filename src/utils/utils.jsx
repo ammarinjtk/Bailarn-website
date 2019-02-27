@@ -1,9 +1,7 @@
 export function pad(x, sequence_length, pad_with) {
   var paded_x = [];
-  var c = 0;
   for (var i = 0; i < x.length; i++) {
     var temp = x[i];
-    c += x[i].length;
 
     if (x[i].length >= sequence_length) {
       var steps = Math.floor(temp.length / sequence_length);
@@ -23,8 +21,8 @@ export function pad(x, sequence_length, pad_with) {
         );
       }
     } else {
-      var extended = [];
-      for (var j = 0; j < sequence_length - x[i].length; j++) {
+      extended = [];
+      for (j = 0; j < sequence_length - x[i].length; j++) {
         extended.push(pad_with);
       }
       temp.push.apply(temp, extended);

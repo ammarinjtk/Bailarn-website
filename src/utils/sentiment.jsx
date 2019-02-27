@@ -1,10 +1,10 @@
 export const EMBEDDING_SIZE = 300;
-export const WORD_INDEXER_SIZE = 307915;
-export const SEQUENCE_LENGTH = 2000;
+export const WORD_INDEXER_SIZE = 54943;
+export const SEQUENCE_LENGTH = 60;
 export const DROPOUT_PROB = 0.5;
 
-export const NUM_FILTER = (2, 2);
-export const FILTER_WIDTH = (3, 2);
+export const NUM_FILTER = (32, 32, 32);
+export const FILTER_WIDTH = (5, 3, 2);
 
 export const HIDDEN_DIM = 50;
 

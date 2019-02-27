@@ -10,7 +10,7 @@ import NERUI from "./components/ner";
 import PosUI from "./components/pos";
 import NavBar from "./components/nav_bar";
 import MenuUI from "./components/menu";
-import KeywordExpansionUI from "./components/keyword_expansion";
+// import KeywordExpansionUI from "./components/keyword_expansion";
 import SentimentUI from "./components/sentiment";
 import TextClassifyUI from "./components/text_classify";
 import AboutUI from "./components/about";

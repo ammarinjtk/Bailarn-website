@@ -83,7 +83,7 @@ class TokenizerUI extends Component {
     var all_result = [];
     for (var sample_idx = 0; sample_idx < readable_x[0].length; sample_idx++) {
       var label = y_pred.get([sample_idx]);
-      var char = readable_x[0][sample_idx];
+      char = readable_x[0][sample_idx];
 
       // Pad label
       if (label === constant.PAD_TAG_INDEX) continue;
@@ -106,7 +106,7 @@ class TokenizerUI extends Component {
       .join("")
       .split("|")
       .filter(function(el) {
-        return el != "";
+        return el !== "";
       });
   };
 

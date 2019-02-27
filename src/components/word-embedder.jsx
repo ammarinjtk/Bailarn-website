@@ -1,19 +1,19 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import Loading from "react-loading-components";
+// import { connect } from "react-redux";
+// import { bindActionCreators } from "redux";
+// import Loading from "react-loading-components";
 // import Hyperlink from "react-native-hyperlink";
 // import { Text } from "react-native";
 
-import { vectorizeWord } from "../action/index";
+// import { vectorizeWord } from "../action/index";
 import ResultUI from "./result";
 import ExplainUI from "./word_embedder_explanation";
 import InputUI, { typeOfInputValue } from "./input";
 import ExampleUI from "./example";
 
 import * as tf from "@tensorflow/tfjs";
-import * as utils from "../utils/utils";
-import * as word_embedder_constant from "../utils/word_embedder";
+// import * as utils from "../utils/utils";
+// import * as word_embedder_constant from "../utils/word_embedder";
 
 class WordEmbedderUI extends Component {
   constructor(props) {
@@ -71,7 +71,7 @@ class WordEmbedderUI extends Component {
   };
 
   getVectorDistance = async (word_embedder_model, word_index, tokens) => {
-    const inv_word_index = utils.swap(word_index);
+    // const inv_word_index = utils.swap(word_index);
     // console.log(inv_tag_index);
     var dist_list = [];
     var dist = {};
@@ -80,8 +80,8 @@ class WordEmbedderUI extends Component {
         var in_arr1 = word_index[tokens[i]];
         var in_arr2 = word_index[tokens[j]];
 
-        var in_arr1 = tf.tensor1d([in_arr1]);
-        var in_arr2 = tf.tensor1d([in_arr2]);
+        in_arr1 = tf.tensor1d([in_arr1]);
+        in_arr2 = tf.tensor1d([in_arr2]);
 
         var d = word_embedder_model.predict([in_arr1, in_arr2]).dataSync();
 
@@ -106,9 +106,9 @@ class WordEmbedderUI extends Component {
 
     console.log(sorted_dist);
 
-    for (var i = 0; i < sorted_dist.length; i++) {
+    for (i = 0; i < sorted_dist.length; i++) {
       var word_list = sorted_dist[i][0].split(",");
-      var d = sorted_dist[i][1];
+      d = sorted_dist[i][1];
 
       dist_list.push({
         w1: word_list[0],
@@ -219,11 +219,11 @@ class WordEmbedderUI extends Component {
   }
 
   render() {
-    var link = (
-      <a href="http://projector.tensorflow.org/?config=https://gist.githubusercontent.com/ammarinjtk/7c393efd36b7549f98f2ac8e4898ad69/raw/9db47703cdd1137a9094f975bcc4008d7318848f/config.json">
-        word embedding visualization
-      </a>
-    );
+    // var link = (
+    //   <a href="http://projector.tensorflow.org/?config=https://gist.githubusercontent.com/ammarinjtk/7c393efd36b7549f98f2ac8e4898ad69/raw/9db47703cdd1137a9094f975bcc4008d7318848f/config.json">
+    //     word embedding visualization
+    //   </a>
+    // );
     return (
       <div class="container">
         <div class="row">
