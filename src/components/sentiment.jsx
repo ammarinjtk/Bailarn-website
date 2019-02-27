@@ -62,7 +62,7 @@ class SentimentUI extends Component {
   load_tokenizer = async () => {
     console.log("Loading tokenizer model!");
     this.tokenizer_model = await tf.loadModel(
-      "https://raw.githubusercontent.com/ammarinjtk/thai-nlp/dev/src/models/tokenizer/model.json"
+      "https://raw.githubusercontent.com/ammarinjtk/thai-nlp/master/src/models/tokenizer/model.json"
     );
     console.log("Loading tokenizer model Successful!");
     // console.log(this.tokenizer_model.summary());
@@ -70,7 +70,7 @@ class SentimentUI extends Component {
 
   load_word_index = async () => {
     fetch(
-      "https://raw.githubusercontent.com/ammarinjtk/thai-nlp/dev/src/models/sentiment/sentiment_word_index.json"
+      "https://raw.githubusercontent.com/ammarinjtk/thai-nlp/master/src/models/sentiment/sentiment_word_index.json"
     )
       .then(res => res.json())
       .then(out => {
@@ -84,7 +84,7 @@ class SentimentUI extends Component {
   load_sentiment = async () => {
     console.log("Loading sentiment model!");
     this.sentiment_model = await tf.loadModel(
-      "https://raw.githubusercontent.com/ammarinjtk/thai-nlp/dev/src/models/sentiment/model.json"
+      "https://raw.githubusercontent.com/ammarinjtk/thai-nlp/dev/master/models/sentiment/model.json"
     );
     console.log("Loading sentiment model Successful!");
     this.setState({ isReady: true });
