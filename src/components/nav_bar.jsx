@@ -37,7 +37,7 @@ class NavBar extends Component {
         <div class="row" style={{ "padding-left": "5px" }}>
           <img src={logo} height="32" width="32" alt="" />
           <div class="col-xs-6">
-            <a class="navbar-brand" href="/thainlp">
+            <a class="navbar-brand" href="/">
               Bailarn Library
             </a>
             <a
@@ -63,7 +63,7 @@ class NavBar extends Component {
             <div class="dropdown-menu right" aria-labelledby="navbarDropdown">
               <div class="dropdown-divider" />
               <Link
-                to={"/thainlp/about"}
+                to={"/about"}
                 activeClassName={"active"}
                 className={"dropdown-item"}
               >
@@ -80,7 +80,7 @@ class NavBar extends Component {
               id="navbarButton"
             >
               <Link
-                to={"/thainlp/about"}
+                to={"/about"}
                 activeClassName={"active"}
                 className={"nav-link"}
               >
