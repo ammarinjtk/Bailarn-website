@@ -59,15 +59,18 @@ class App extends Component {
               head={["Foundation", "Application"]}
               detail={[
                 {
-                  Tokenization: "/tokenization",
-                  "Word Embedding": "/word-embedding",
-                  "Named Entity Recognition": "/ner",
-                  "Part of Speech Tagging": "/pos"
+                  Tokenization: process.env.PUBLIC_URL + "/tokenization",
+                  "Word Embedding": process.env.PUBLIC_URL + "/word-embedding",
+                  "Named Entity Recognition": process.env.PUBLIC_URL + "/ner",
+                  "Part of Speech Tagging": process.env.PUBLIC_URL + "/pos"
                 },
                 {
-                  "Sentiment Analysis": "/sentiment-analyzer",
-                  "Text Categorization": "/text-categorization",
-                  "Keyword Expansion": "/keyword-expansion"
+                  "Sentiment Analysis":
+                    process.env.PUBLIC_URL + "/sentiment-analyzer",
+                  "Text Categorization":
+                    process.env.PUBLIC_URL + "/text-categorization",
+                  "Keyword Expansion":
+                    process.env.PUBLIC_URL + "/keyword-expansion"
                 }
               ]}
             />
