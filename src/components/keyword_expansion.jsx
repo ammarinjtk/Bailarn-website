@@ -17,7 +17,7 @@ class KeywordExpansionUI extends Component {
       inputValue: "",
       isShowOutput: false,
       isTextFormat: true,
-      examples: ["โทรศัพท์", "มือถือ", "ไอโฟน", "samsung"],
+      examples: ["Iphone", "มือถือ", "ไอโฟน", "samsung"],
       inputType: "",
       old_output: null,
       outputStatus: 1,

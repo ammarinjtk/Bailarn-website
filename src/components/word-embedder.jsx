@@ -203,7 +203,7 @@ class WordEmbedderUI extends Component {
       w2: [],
       distance: []
     };
-    for (var i = 0; i < this.state.distance_list; i++) {
+    for (var i = 0; i < this.state.distance_list.length; i++) {
       json["w1"].push(this.state.distance_list[i]["w1"]);
       json["w2"].push(this.state.distance_list[i]["w2"]);
       json["distance"].push(this.state.distance_list[i]["distance"]);
