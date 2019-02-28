@@ -10,7 +10,7 @@ import NERUI from "./components/ner";
 import PosUI from "./components/pos";
 import NavBar from "./components/nav_bar";
 import MenuUI from "./components/menu";
-// import KeywordExpansionUI from "./components/keyword_expansion";
+import KeywordExpansionUI from "./components/keyword_expansion";
 import SentimentUI from "./components/sentiment";
 import TextClassifyUI from "./components/text_classify";
 import AboutUI from "./components/about";
@@ -66,7 +66,8 @@ class App extends Component {
                 },
                 {
                   "Sentiment Analysis": "/sentiment-analyzer",
-                  "Text Categorization": "/text-categorization"
+                  "Text Categorization": "/text-categorization",
+                  "Keyword Expansion": "/keyword-expansion"
                 }
               ]}
             />
@@ -80,6 +81,11 @@ class App extends Component {
               <Route exact path="/ner" component={NERUI} />
               <Route exact path="/pos" component={PosUI} />
 
+              <Route
+                exact
+                path="/keyword-expansion"
+                component={KeywordExpansionUI}
+              />
               <Route
                 exact
                 path="/text-categorization"

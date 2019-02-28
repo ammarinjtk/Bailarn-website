@@ -1,4 +1,4 @@
-export const WORD_INDEXER_SIZE = 158499;
+export const WORD_INDEXER_SIZE = 50002;
 export const EMBEDDING_SIZE = 300;
 export const SEQUENCE_LENGTH = 200;
 

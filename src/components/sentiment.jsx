@@ -84,7 +84,7 @@ class SentimentUI extends Component {
   load_sentiment = async () => {
     console.log("Loading sentiment model!");
     this.sentiment_model = await tf.loadModel(
-      "https://raw.githubusercontent.com/ammarinjtk/thai-nlp/dev/master/models/sentiment/model.json"
+      "https://raw.githubusercontent.com/ammarinjtk/thai-nlp/master/src/models/sentiment/model.json"
     );
     console.log("Loading sentiment model Successful!");
     this.setState({ isReady: true });
