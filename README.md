@@ -1,68 +1,124 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Thai NLP platform
 
-## Available Scripts
+[![Build Status](https://travis-ci.org/ammarinjtk/thai-nlp.svg?branch=master)](https://travis-ci.org/ammarinjtk/thai-nlp)
 
-In the project directory, you can run:
+The project aims to develop Thai NLP Library based on Deep Learning techniques. With this library, users can train the model on their own dataset using the provided deep learning model structure and utilities. Moreover, Thai NLP Library also provides pre-trained models to process Thai text instantly. All pre-trained models was evaluated and compared across various deep learning techniques proposed in the previous researches in the experiments.
 
-### `npm start`
+- `/tokenization`: Identify the boundaries between texts in natural languages to divide these texts into the meaningful unit as word.
+- `/word-embedding`: Map a word from the vocabulary to vectors of real numbers involving a mathematical embedding.
+- `/ner`: Predict Named entity of each words in a sentence.
+- `/pos`: Predict Part-of-Speech of each words in a sentence.
+- `/keyword-expansion`: Find the related words from the vocabulary to the query word.
+- `/text-categorization`: Predict the pre-defined classes of sentences on the specific domain.
+- `/sentiment-analyzer`: Predict the Sentiment of a document including Positive, Neutral and Negative sentiment.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Prerequisite
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+- npm 5.6.0 or later
+- node 10.0.0 or later
 
-### `npm test`
+# Installation
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+git clone  https://github.com/KawinL/Thai_NLP_web_ui.git
+cd Thai_NLP_web_ui
+npm install
+```
 
-### `npm run build`
+# Start server
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+npm start
+```
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+the server will listening on port 3000
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# File Functionality
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- `public/`: Contain static file to serve to client
+- `src/`
+  - `action/`
+    - `index.js`
+      - Contain all APIs connecting to the back-end server.
+      - Receive parameter from corresponding component and **transform** it to fit the requirement of APIs.
+      - Transfer data to reducers
+  - `componentes/`Contain all React component that
+    - `about.jsx`
+      - UI of about page
+    - `dropdown.jsx`
+      - Dropdown UI component
+    - `example.jsx`
+      - Example UI component
+    - `explanation.jsx`
+      - Explanation UI component
+    - `home.jsx`
+      - UI of home page
+    - `input.jsx`
+      - Input UI component
+    - `keyword_expansion.jsx`
+      - UI of keyword_expansion page
+      - Send user input to `keywordExpand` function in `action/index.js`
+    - `menu.jsx`
+      - Input UI component
+    - `nav_bar.css`
+      - css for nav bar
+    - `nav_bar.jsx`
+      - nav bar UI component
+    - `ner_tag_list.jsx`
+      - constant static value including name entity tag list, and name entity tag description.
+    - `ner.jsx`
+      - UI of ner page
+      - Send user input to `NER` function in `action/index.js`
+    - `pos_color.jsx`
+      - Contain pos tag colors
+    - `pos.jsx`
+      - UI of pos page
+      - Send user input to `POS` function in `action/index.js`
+    - `posresult.jsx`
+      - Pos result UI component
+      - Constant static value including part of speech tag list, and part of speech tag description.
+    - `result.jsx`
+      - result UI component
+    - `sentiment.jsx`
+      - UI of sentiment page
+      - Send user input to `sentiment` function in `action/index.js`
+    - `style.css`
+    - `text_classify.jsx`
+      - UI of text_classify page
+      - Send user input to `classify` function in `action/index.js`
+    - `tokenizer.jsx`
+      - UI of tokenizer page
+      - Send user input to `tokenizeWord` function in `action/index.js`
+    - `word-embedder.jsx`
+      - UI of word-embedder page
+      - Send user input to `vectorizeWord` function in `action/index.js`
+  - `reducer/`
+    - `index.js`
+      - Combine all data from other reducer
+    - `keyword_expansion_reducer.js`
+      - Transform data from `keywordExpand` function in `action/index.js` to useable structure for `keyword_expansion.jsx`
+    - `name_entity_recognizer_reducer.js`
+      - Transform data from `NER`function in `action/index.js` to useable structure for `ner.jsx`
+    - `part_of_speech_reducer.js`
+      - Transform data from `POS`function in `action/index.js` to useable structure for `pos.jsx`
+    - `sentiment_reducer.js`
+      - Transform data from `sentiment`function in `action/index.js` to useable structure for `sentiment.jsx`
+    - `text_classifier_reducer.js`
+      - Transform data from `classify`function in `action/index.js` to useable structure for `text_classify.jsx`
+    - `tokenized_word_reducer.js`
+      - Transform data from `tokenizeWord`function in `action/index.js` to useable structure for `tokenizer.jsx`
+    - `vectorize_word_reducer.js`
+      - Transform data from `vectorizeWord`function in `action/index.js` to useable structure for `word-embedder.jsx`
+  - `images/`: Contain all image used in website
+  - `App.css`
+    - css for `App.js`
+  - `App.js`
+    - The root component of the website, The others component must use from this component
+  - `index.css`
+    - css for `index.js`
+  - `index.js`
+    - The component that connecting the React component and html template
+  - `registerServiceWorker.js`
+    - Auto generate by create-react-app
+  - `simple-sidebar.css`
+    - css for sidebar
