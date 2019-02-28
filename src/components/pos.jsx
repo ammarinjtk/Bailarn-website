@@ -1,9 +1,4 @@
 import React, { Component } from "react";
-// import { connect } from "react-redux";
-// import { bindActionCreators } from "redux";
-// import Loading from "react-loading-components";
-
-// import { POS } from "../action/index";
 import ResultUI from "./result";
 import ExplainUI from "./explanation";
 import InputUI, { typeOfInputValue } from "./input";
@@ -24,11 +19,11 @@ class PosUI extends Component {
       isShowOutput: false,
       isTextFormat: true,
       examples: [
-        "สตีฟชอบกินกล้วยแต่ฉันไม่ชอบ",
-        "ฉันอยากไปห้องพัก",
-        "ฉันอยากพัก",
-        "ที่แห่งนี้ยังคงมีรักอยู่ไหม?",
-        "https://www.thairath.co.th/content/1033805"
+        "สตีฟชอบกินกล้วย แต่ฉันไม่ชอบ",
+        "ฉันอยากไปที่ห้องพักแล้ว",
+        "ฉันอยากพักที่โรงแรม",
+        "พระราชินีพระราชทานดอกไม้เยี่ยม รองผู้การ ฯ",
+        "กลุ่มก่อคการร้ายวางระเบิดในพื้นที่ จ.นราธิวาส"
       ],
       inputType: "",
       old_output: null,
@@ -324,14 +319,5 @@ class PosUI extends Component {
     );
   }
 }
-
-// const mapStateToProps = state => {
-//   console.log(state.wordList);
-//   return { posTagList: state.posTagList };
-// };
-
-// const mapDispatchToProps = dispatch => {
-//   return bindActionCreators({ POS }, dispatch);
-// };
 
 export default PosUI;

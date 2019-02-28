@@ -1,10 +1,5 @@
 import React, { Component } from "react";
-// import { connect } from "react-redux";
-// import { bindActionCreators } from "redux";
 import ReactTooltip from "react-tooltip";
-// import Loading from "react-loading-components";
-
-// import { NER } from "../action/index";
 import ResultUI from "./result";
 import ExplainUI from "./explanation";
 import InputUI, { typeOfInputValue } from "./input";
@@ -27,10 +22,9 @@ class NerUI extends Component {
       isTextFormat: true,
       examples: [
         "สถานที่ที่คุณสมชายชอบไปคือเกาหลีใต้",
-        "รถฟอร์ดราคาแพงแต่ขายดีมาก",
-        "อาหารร้านเซเว่นราคาเพียง 20 บาท ไม่แพ่งเลย",
-        "https://www.khaosod.co.th/breaking-news/news_1005005",
-        "https://www.thairath.co.th/content/1033805"
+        "อาหารกล่องเซเว่นราคาเพียง 20 บาท",
+        "กทม.จัดรถรางฟรี พาทัวร์เข้าพรรษาทำบุญ 9 วัด",
+        "พบผู้ต้องสงสัยชิงเงิน 12 ล้าน ตำรวจเตรียมปิดค้น"
       ],
       inputType: "",
       tagList: [
@@ -425,14 +419,5 @@ class NerUI extends Component {
     );
   }
 }
-
-// const mapStateToProps = state => {
-//   console.log(state.nerTagList);
-//   return { nerTagList: state.nerTagList };
-// };
-
-// const mapDispatchToProps = dispatch => {
-//   return bindActionCreators({ NER }, dispatch);
-// };
 
 export default NerUI;

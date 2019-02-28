@@ -1,9 +1,4 @@
 import React, { Component } from "react";
-// import { connect } from "react-redux";
-// import { bindActionCreators } from "redux";
-// import Loading from "react-loading-components";
-
-// import { sentiment } from "../action/index";
 
 import * as tf from "@tensorflow/tfjs";
 import * as utils from "../utils/utils";
@@ -35,10 +30,9 @@ class SentimentUI extends Component {
       isShowOutput: false,
       isTextFormat: true,
       examples: [
-        "https://pantip.com/topic/37393081",
-        "https://pantip.com/topic/37392967",
-        "https://pantip.com/topic/37396578",
-        "https://pantip.com/topic/37395554"
+        "ร้านห่วยแถมราคาอาหารแพงมาก",
+        "เมนูข้าวผัดหนำเลียบอร่อยดีค่ะ",
+        "ไม่รู้จะใจร้ายไปรึเปล่า แต่ไม่อร่อยอ่ะค่ะ"
       ],
       inputType: "",
       old_output: null,
@@ -341,11 +335,5 @@ class SentimentUI extends Component {
     );
   }
 }
-// const mapStateToProps = state => {
-//   return { sentimentValue: state.sentimentValue };
-// };
-// const mapDispatchToProps = dispatch => {
-//   return bindActionCreators({ sentiment }, dispatch);
-// };
 
 export default SentimentUI;

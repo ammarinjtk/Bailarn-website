@@ -1,11 +1,4 @@
 import React, { Component } from "react";
-// import { connect } from "react-redux";
-// import { bindActionCreators } from "redux";
-// import Loading from "react-loading-components";
-// import Hyperlink from "react-native-hyperlink";
-// import { Text } from "react-native";
-
-// import { vectorizeWord } from "../action/index";
 import ResultUI from "./result";
 import ExplainUI from "./word_embedder_explanation";
 import InputUI, { typeOfInputValue } from "./input";
@@ -24,9 +17,9 @@ class WordEmbedderUI extends Component {
       isShowOutput: false,
       isTextFormat: true,
       examples: [
-        "แม่, พ่อ, พี่",
-        "กิน, นอน, รับประทาน",
-        "หมู, นก, หมา",
+        "แม่, พ่อ, เพื่อนบ้าน",
+        "กิน, เก้าอี้, รับประทาน",
+        "วันเสาร์, วันอังคาร, ดวงจันทร์",
         "เร็ว, ช้า, สวย"
       ],
       inputType: "",
@@ -219,11 +212,6 @@ class WordEmbedderUI extends Component {
   }
 
   render() {
-    // var link = (
-    //   <a href="http://projector.tensorflow.org/?config=https://gist.githubusercontent.com/ammarinjtk/7c393efd36b7549f98f2ac8e4898ad69/raw/9db47703cdd1137a9094f975bcc4008d7318848f/config.json">
-    //     word embedding visualization
-    //   </a>
-    // );
     return (
       <div class="container">
         <div class="row">
@@ -292,13 +280,5 @@ class WordEmbedderUI extends Component {
     );
   }
 }
-
-// const mapStateToProps = state => {
-//   return { similarMatrix: state.similarMatrix };
-// };
-
-// const mapDispatchToProps = dispatch => {
-//   return bindActionCreators({ vectorizeWord }, dispatch);
-// };
 
 export default WordEmbedderUI;

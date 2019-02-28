@@ -1,10 +1,4 @@
 import React, { Component } from "react";
-// import { connect } from "react-redux";
-// import { bindActionCreators } from "redux";
-
-// import Loading from "react-loading-components";
-
-// import { classify } from "../action/index";
 
 import "react-dropdown/style.css";
 
@@ -28,10 +22,10 @@ class TextClassifierUI extends Component {
       isShowOutput: false,
       isTextFormat: true,
       examples: [
-        "สัญญาณมือถือเอไอเอสไม่ค่อยดีเลย",
-        "https://pantip.com/topic/37392967",
-        "https://pantip.com/topic/37396578",
-        "https://pantip.com/topic/37395554"
+        "ปัญหาการสั่งซื้อโทรศัพท์ผ่านเว็บไซต์",
+        "Iphone มีปัญหาจอแตกเปิดไม่ติด",
+        "รบกวนถาม Truemove เรื่องย้ายค่ายเบอร์เดิม",
+        "SamsungGalaxy แบตเสื่อมครับ"
       ],
       inputType: "",
       old_output: null,
@@ -356,13 +350,5 @@ class TextClassifierUI extends Component {
     );
   }
 }
-// const mapStateToProps = state => {
-//   console.log(state)
-//   return { textClasses: state.textClasses };
-// };
-
-// const mapDispatchToProps = dispatch => {
-//   return bindActionCreators({ classify }, dispatch);
-// };
 
 export default TextClassifierUI;
