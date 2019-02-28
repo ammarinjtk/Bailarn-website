@@ -47,7 +47,7 @@ class App extends Component {
 
   render() {
     return (
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <BrowserRouter>
         <div>
           <div class="row" style={{ height: "51px" }}>
             <div class="col-md-12">
@@ -75,27 +75,37 @@ class App extends Component {
               class="col page-content-wrapper"
               style={{ "padding-top": "15px" }}
             >
-              <Route exact path="/tokenization" component={TokenizerUI} />
-              <Route exact path="/word-embedding" component={WordEmbedderUI} />
+              <Route
+                path={process.env.PUBLIC_URL + "/tokenization"}
+                component={TokenizerUI}
+              />
+              <Route
+                path={process.env.PUBLIC_URL + "/word-embedding"}
+                component={WordEmbedderUI}
+              />
 
-              <Route exact path="/ner" component={NERUI} />
-              <Route exact path="/pos" component={PosUI} />
+              <Route path={process.env.PUBLIC_URL + "/ner"} component={NERUI} />
+              <Route path={process.env.PUBLIC_URL + "/pos"} component={PosUI} />
 
               <Route
-                exact
-                path="/keyword-expansion"
+                path={process.env.PUBLIC_URL + "/keyword-expansion"}
                 component={KeywordExpansionUI}
               />
               <Route
-                exact
-                path="/text-categorization"
+                path={process.env.PUBLIC_URL + "/text-categorization"}
                 component={TextClassifyUI}
               />
-              <Route exact path="/sentiment-analyzer" component={SentimentUI} />
+              <Route
+                path={process.env.PUBLIC_URL + "/sentiment-analyzer"}
+                component={SentimentUI}
+              />
 
-              <Route exact path="/about" component={AboutUI} />
+              <Route
+                path={process.env.PUBLIC_URL + "/about"}
+                component={AboutUI}
+              />
               {/* <Route exact path="/thainlp" component={HomeUI} /> */}
-              <Route exact path="/" component={HomeUI} />
+              <Route path={process.env.PUBLIC_URL + "/"} component={HomeUI} />
             </div>
           </div>
         </div>
