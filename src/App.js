@@ -60,18 +60,15 @@ class App extends Component {
               head={["Foundation", "Application"]}
               detail={[
                 {
-                  Tokenization: process.env.PUBLIC_URL + "/tokenization",
-                  "Word Embedding": process.env.PUBLIC_URL + "/word-embedding",
-                  "Named Entity Recognition": process.env.PUBLIC_URL + "/ner",
-                  "Part of Speech Tagging": process.env.PUBLIC_URL + "/pos"
+                  Tokenization: "/tokenization",
+                  "Word Embedding": "/word-embedding",
+                  "Named Entity Recognition": "/ner",
+                  "Part of Speech Tagging": "/pos"
                 },
                 {
-                  "Sentiment Analysis":
-                    process.env.PUBLIC_URL + "/sentiment-analyzer",
-                  "Text Categorization":
-                    process.env.PUBLIC_URL + "/text-categorization",
-                  "Keyword Expansion":
-                    process.env.PUBLIC_URL + "/keyword-expansion"
+                  "Sentiment Analysis": "/sentiment-analyzer",
+                  "Text Categorization": "/text-categorization",
+                  "Keyword Expansion": "/keyword-expansion"
                 }
               ]}
             />
@@ -80,36 +77,36 @@ class App extends Component {
               style={{ "padding-top": "15px" }}
             >
               <Route
-                path={process.env.PUBLIC_URL + "/tokenization"}
+                path="/tokenization"
                 component={TokenizerUI}
               />
               <Route
-                path={process.env.PUBLIC_URL + "/word-embedding"}
+                path="/word-embedding"
                 component={WordEmbedderUI}
               />
 
-              <Route path={process.env.PUBLIC_URL + "/ner"} component={NERUI} />
-              <Route path={process.env.PUBLIC_URL + "/pos"} component={PosUI} />
+              <Route path=+ "/ner" component={NERUI} />
+              <Route path="/pos" component={PosUI} />
 
               <Route
-                path={process.env.PUBLIC_URL + "/keyword-expansion"}
+                path="/keyword-expansion"
                 component={KeywordExpansionUI}
               />
               <Route
-                path={process.env.PUBLIC_URL + "/text-categorization"}
+                path="/text-categorization"
                 component={TextClassifyUI}
               />
               <Route
-                path={process.env.PUBLIC_URL + "/sentiment-analyzer"}
+                path="/sentiment-analyzer"
                 component={SentimentUI}
               />
 
               <Route
-                path={process.env.PUBLIC_URL + "/about"}
+                path="/about"
                 component={AboutUI}
               />
               {/* <Route exact path="/thainlp" component={HomeUI} /> */}
-              <Route path={process.env.PUBLIC_URL + "/"} component={HomeUI} />
+              <Route path="/" component={HomeUI} />
             </div>
           </div>
         </div>
