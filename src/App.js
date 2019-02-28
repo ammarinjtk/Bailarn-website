@@ -76,19 +76,27 @@ class App extends Component {
               class="col page-content-wrapper"
               style={{ "padding-top": "15px" }}
             >
-              <Route path="/tokenization" component={TokenizerUI} />
-              <Route path="/word-embedding" component={WordEmbedderUI} />
+              <Route exact path="/tokenization" component={TokenizerUI} />
+              <Route exact path="/word-embedding" component={WordEmbedderUI} />
 
-              <Route path="/ner" component={NERUI} />
-              <Route path="/pos" component={PosUI} />
+              <Route exact path="/ner" component={NERUI} />
+              <Route exact path="/pos" component={PosUI} />
 
-              <Route path="/keyword-expansion" component={KeywordExpansionUI} />
-              <Route path="/text-categorization" component={TextClassifyUI} />
-              <Route path="/sentiment-analyzer" component={SentimentUI} />
+              <Route
+                exact
+                path="/keyword-expansion"
+                component={KeywordExpansionUI}
+              />
+              <Route
+                exact
+                path="/text-categorization"
+                component={TextClassifyUI}
+              />
+              <Route exact path="/sentiment-analyzer" component={SentimentUI} />
 
-              <Route path="/about" component={AboutUI} />
-              {/* <Route exact path="/thainlp" component={HomeUI} /> */}
-              <Route path="/" component={HomeUI} />
+              <Route exact path="/about" component={AboutUI} />
+              {/* <Route path="/home" component={HomeUI} /> */}
+              <Route exact path="/" component={HomeUI} />
             </div>
           </div>
         </div>
