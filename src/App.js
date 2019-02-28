@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import "./App.css";
 import "./simple-sidebar.css";
 
-import { BrowserRouter, Route } from "react-router-dom";
+import { Route, HashRouter } from "react-router-dom";
 import TokenizerUI from "./components/tokenizer";
 import WordEmbedderUI from "./components/word-embedder";
 import NERUI from "./components/ner";
@@ -46,8 +46,9 @@ class App extends Component {
   }
 
   render() {
+    // console.log(process.env.PUBLIC_URL);
     return (
-      <BrowserRouter>
+      <HashRouter>
         <div>
           <div class="row" style={{ height: "51px" }}>
             <div class="col-md-12">
@@ -59,18 +60,15 @@ class App extends Component {
               head={["Foundation", "Application"]}
               detail={[
                 {
-                  Tokenization: process.env.PUBLIC_URL + "/tokenization",
-                  "Word Embedding": process.env.PUBLIC_URL + "/word-embedding",
-                  "Named Entity Recognition": process.env.PUBLIC_URL + "/ner",
-                  "Part of Speech Tagging": process.env.PUBLIC_URL + "/pos"
+                  Tokenization: "/tokenization",
+                  "Word Embedding": "/word-embedding",
+                  "Named Entity Recognition": "/ner",
+                  "Part of Speech Tagging": "/pos"
                 },
                 {
-                  "Sentiment Analysis":
-                    process.env.PUBLIC_URL + "/sentiment-analyzer",
-                  "Text Categorization":
-                    process.env.PUBLIC_URL + "/text-categorization",
-                  "Keyword Expansion":
-                    process.env.PUBLIC_URL + "/keyword-expansion"
+                  "Sentiment Analysis": "/sentiment-analyzer",
+                  "Text Categorization": "/text-categorization",
+                  "Keyword Expansion": "/keyword-expansion"
                 }
               ]}
             />
@@ -78,41 +76,23 @@ class App extends Component {
               class="col page-content-wrapper"
               style={{ "padding-top": "15px" }}
             >
-              <Route
-                path={process.env.PUBLIC_URL + "/tokenization"}
-                component={TokenizerUI}
-              />
-              <Route
-                path={process.env.PUBLIC_URL + "/word-embedding"}
-                component={WordEmbedderUI}
-              />
+              <Route path="/tokenization" component={TokenizerUI} />
+              <Route path="/word-embedding" component={WordEmbedderUI} />
 
-              <Route path={process.env.PUBLIC_URL + "/ner"} component={NERUI} />
-              <Route path={process.env.PUBLIC_URL + "/pos"} component={PosUI} />
+              <Route path="/ner" component={NERUI} />
+              <Route path="/pos" component={PosUI} />
 
-              <Route
-                path={process.env.PUBLIC_URL + "/keyword-expansion"}
-                component={KeywordExpansionUI}
-              />
-              <Route
-                path={process.env.PUBLIC_URL + "/text-categorization"}
-                component={TextClassifyUI}
-              />
-              <Route
-                path={process.env.PUBLIC_URL + "/sentiment-analyzer"}
-                component={SentimentUI}
-              />
+              <Route path="/keyword-expansion" component={KeywordExpansionUI} />
+              <Route path="/text-categorization" component={TextClassifyUI} />
+              <Route path="/sentiment-analyzer" component={SentimentUI} />
 
-              <Route
-                path={process.env.PUBLIC_URL + "/about"}
-                component={AboutUI}
-              />
+              <Route path="/about" component={AboutUI} />
               {/* <Route exact path="/thainlp" component={HomeUI} /> */}
-              <Route path={process.env.PUBLIC_URL + "/"} component={HomeUI} />
+              <Route path="/" component={HomeUI} />
             </div>
           </div>
         </div>
-      </BrowserRouter>
+      </HashRouter>
     );
   }
 }
