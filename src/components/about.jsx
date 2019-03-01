@@ -51,7 +51,8 @@ class SentimentUI extends Component {
               height={200}
               border={0}
               borderRadius={30}
-              scale={1.0}
+              scale={1.3}
+              position={{ x: 0.65, y: 0 }}
             />
             <div style={{ "padding-top": "10px" }}>
               <p class="text-center">
