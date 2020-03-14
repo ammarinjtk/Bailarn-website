@@ -5,7 +5,7 @@
   "homepage": "https://ammarinjtk.github.io/thai-nlp/",
   "dependencies": {
     "@tensorflow/tfjs": "^0.15.3",
-    "acorn": "^6.1.0",
+    "acorn": "^6.4.1",
     "antd": "^3.13.6",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
