@@ -15,7 +15,7 @@
     "color-scheme": "^1.0.1",
     "d3-scale": "^2.2.2",
     "install": "^0.12.2",
-    "node-fetch": "^2.3.0",
+    "node-fetch": "^2.6.1",
     "popper.js": "^1.14.7",
     "react": "^16.8.3",
     "react-avatar-editor": "^11.0.6",
