@@ -1,4 +1,4 @@
-# Thai NLP platform
+## Bailarn Website
 
 [![Build Status](https://travis-ci.org/ammarinjtk/thai-nlp.svg?branch=master)](https://travis-ci.org/ammarinjtk/thai-nlp)
 
@@ -12,113 +12,107 @@ The project aims to develop Thai NLP Library based on Deep Learning techniques. 
 - `/text-categorization`: Predict the pre-defined classes of sentences on the specific domain.
 - `/sentiment-analyzer`: Predict the Sentiment of a document including Positive, Neutral and Negative sentiment.
 
-# Prerequisite
+## Development
+---
+You need to install all dependencies:
 
-- npm 5.6.0 or later
-- node 10.0.0 or later
+    npm install
 
-# Installation
+Then run the development server. The application will be running at default port 3000:
+
+    npm start
+
+## Files Structure
+---
+
 
 ```
-git clone  https://github.com/KawinL/Thai_NLP_web_ui.git
-cd Thai_NLP_web_ui
-npm install
+di-portal
+├── README.md
+├── public
+    ├── css/
+    ├── media/
+    └── index.html
+├── src
+│   ├── _metronic
+│   |   ├── _assets
+│   |   │   ├── js/
+│   |   │   ├── plugin/
+|   |   |   └── sass/
+|   |   ├── _helper/
+|   |   ├── _partial
+│   |   │   ├── control/
+│   |   │   ├── dropdowns/
+|   |   |   └── index.js
+|   |   ├── i18n/
+|   |   ├── layout
+│   |   │   ├── _core/
+│   |   │   ├── components/
+|   |   |   └── index.js
+│   ├── app
+│   |   ├── modules
+│   |   │   ├── Auth
+|   |   |   |   ├── index.js
+|   |   |   |   ├── _redux/authRedux.js
+|   |   |   |   └── pages
+|   |   |   |       ├── AuthPage.js
+|   |   |   |       ├── Login.js
+|   |   |   |       └── Logout.js
+│   |   ├── pages
+|   |   |   ├── AdhocQueryPage.js
+|   |   |   ├── DacsCheckerPage.js
+|   |   |   ├── DataDeckTestPage.js
+|   |   |   ├── ErrorPage.js
+|   |   |   ├── HomePage.js
+|   |   |   ├── MaMonitoringPage.js
+|   |   |   ├── MaSubmissionPage.js
+|   |   |   └── TableCreatorPage.js
+│   |   ├── BasePage.js
+│   |   ├── Routes.js
+│   |   └── App.js
+│   ├── redux
+│   |   ├── rootReducer.js
+│   |   └── store.js
+├── nginx/nginx.conf
+├── index.js
+├── package.json
+├── serve.json
+├── webpack.config.js
+├── Dockerfile
+├── .env
+├── build/
+└── node_modules/
+
 ```
+The web application is based on Create React App. For more detailed information of the CRA, visit the official Create React App [documentation website](https://create-react-app.dev/docs/getting-started/).
 
-# Start server
+| Path | Description |
+| ----------- | ----------- |
+| **/build** | The built output. Run command `npm run build` to build it. |
+| **/node_modules** | The `package.json` file in the app root defines what libraries will be installed into `node_modules/` when you run `npm install`. |
+| **/public** | Folder contains the `index.html` file so you can tweak it, Change `<title>`, insert additional `<link>` and `<script>` tags. Also in '/public/media' folder you able to find all images/icons/SVGs and `Splash Screen` styles. |
+| **/src** | The main app lives in the src folder. All React components, styles and anything else the app needs go here. |
+| /src/_metronic/**_assets** | Contains shared common parts: js (Layout js helpers), plugins (icons plugins), sass (common style structure). |
+| /src/_metronic/**_helpers** | Contains shared utils which are used by all application modules. |
+| /src/_metronic/**_partials** | Contains shared components which are used by all application modules. |
+| /src/_metronic/**i18n** | Contains internationalization, [react-intl](https://github.com/formatjs/formatjs),  for react implementations. |
+| /src/_metronic/layout/**_core** | Contains Layout core logic which is based on React.Context. Also includes [Material-UI](https://material-ui.com/customization/theming/) overriding and layout configuration file(LayoutConfig.js). |
+| /src/_metronic/layout/**layout** | Contains Layout components(Layout, Header, Aside, Footer, ...). |
+| /src/app/**modules** | Contains application [lazy](https://en.reactjs.org/docs/code-splitting.html) modules, which lets you render a dynamic import as a regular component to show some fallback content (such as a loading indicator) (Authorization, ...) |
+| /src/app/**pages** | Contains application pages (Home page, DACS Checker page, ...) |
+| /src/app/**App.js** | Main application entry point. |
+| /src/app/**BasePage.js** | Private routes entry point. |
+| /src/app/**Routes.js** | Application routing is based on [React Routing](https://reactrouter.com/web). |
+| /src/app/**redux** | Contains the main redux setup(rootReducer, store). |
+| /src/**index.js** | JavaScript entry point. |
+| /src/**index.scss** | Styles entry point. |
+| **serve.json** | `serve.json` is used by `serve-handler` running by command `npm run serve`. |
+| **package.json** | A package.json file contains meta data about app or module. Most importantly, it includes the list of dependencies to install from npm when running npm install. |
 
-```
-npm start
-```
 
-the server will listening on port 3000
+## Authentication
+---
+We use Firebase as a authentication service. Users can sign in using their internal emails (@sertiscorp.com) supported by Google. Firebase authentication provides backend services, easy-to-use SDKs, and ready-made UI libraries to authenticate users in web applications. It also supports popular identity providers such as Google, Facebook, Twitter, and more. For more reference, you can see the [official documentation](https://firebase.google.com/docs/auth).
 
-# File Functionality
-
-- `public/`: Contain static file to serve to client
-- `src/`
-  - `action/`
-    - `index.js`
-      - Contain all APIs connecting to the back-end server.
-      - Receive parameter from corresponding component and **transform** it to fit the requirement of APIs.
-      - Transfer data to reducers
-  - `componentes/`Contain all React component that
-    - `about.jsx`
-      - UI of about page
-    - `dropdown.jsx`
-      - Dropdown UI component
-    - `example.jsx`
-      - Example UI component
-    - `explanation.jsx`
-      - Explanation UI component
-    - `home.jsx`
-      - UI of home page
-    - `input.jsx`
-      - Input UI component
-    - `keyword_expansion.jsx`
-      - UI of keyword_expansion page
-      - Send user input to `keywordExpand` function in `action/index.js`
-    - `menu.jsx`
-      - Input UI component
-    - `nav_bar.css`
-      - css for nav bar
-    - `nav_bar.jsx`
-      - nav bar UI component
-    - `ner_tag_list.jsx`
-      - constant static value including name entity tag list, and name entity tag description.
-    - `ner.jsx`
-      - UI of ner page
-      - Send user input to `NER` function in `action/index.js`
-    - `pos_color.jsx`
-      - Contain pos tag colors
-    - `pos.jsx`
-      - UI of pos page
-      - Send user input to `POS` function in `action/index.js`
-    - `posresult.jsx`
-      - Pos result UI component
-      - Constant static value including part of speech tag list, and part of speech tag description.
-    - `result.jsx`
-      - result UI component
-    - `sentiment.jsx`
-      - UI of sentiment page
-      - Send user input to `sentiment` function in `action/index.js`
-    - `style.css`
-    - `text_classify.jsx`
-      - UI of text_classify page
-      - Send user input to `classify` function in `action/index.js`
-    - `tokenizer.jsx`
-      - UI of tokenizer page
-      - Send user input to `tokenizeWord` function in `action/index.js`
-    - `word-embedder.jsx`
-      - UI of word-embedder page
-      - Send user input to `vectorizeWord` function in `action/index.js`
-  - `reducer/`
-    - `index.js`
-      - Combine all data from other reducer
-    - `keyword_expansion_reducer.js`
-      - Transform data from `keywordExpand` function in `action/index.js` to useable structure for `keyword_expansion.jsx`
-    - `name_entity_recognizer_reducer.js`
-      - Transform data from `NER`function in `action/index.js` to useable structure for `ner.jsx`
-    - `part_of_speech_reducer.js`
-      - Transform data from `POS`function in `action/index.js` to useable structure for `pos.jsx`
-    - `sentiment_reducer.js`
-      - Transform data from `sentiment`function in `action/index.js` to useable structure for `sentiment.jsx`
-    - `text_classifier_reducer.js`
-      - Transform data from `classify`function in `action/index.js` to useable structure for `text_classify.jsx`
-    - `tokenized_word_reducer.js`
-      - Transform data from `tokenizeWord`function in `action/index.js` to useable structure for `tokenizer.jsx`
-    - `vectorize_word_reducer.js`
-      - Transform data from `vectorizeWord`function in `action/index.js` to useable structure for `word-embedder.jsx`
-  - `images/`: Contain all image used in website
-  - `App.css`
-    - css for `App.js`
-  - `App.js`
-    - The root component of the website, The others component must use from this component
-  - `index.css`
-    - css for `index.js`
-  - `index.js`
-    - The component that connecting the React component and html template
-  - `registerServiceWorker.js`
-    - Auto generate by create-react-app
-  - `simple-sidebar.css`
-    - css for sidebar
+## Authors
+- **Amarin Jettakul** &mdash; _Initial work_ &mdash; Data Analyst (contact: ammarinjtk@gmail.com)
