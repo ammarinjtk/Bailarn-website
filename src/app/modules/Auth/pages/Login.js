@@ -9,14 +9,13 @@ import firebase from "firebase/app";
 import "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA4GhpanhBHr2p8F4ZENpqPOwQRcy8L_VU",
-  authDomain: "di-portal-kickstart.firebaseapp.com",
-  databaseURL: "https://di-portal-kickstart.firebaseio.com",
-  projectId: "di-portal-kickstart",
-  storageBucket: "di-portal-kickstart.appspot.com",
-  messagingSenderId: "37223840422",
-  appId: "1:37223840422:web:d952ac72238d1ea8d35267",
-  measurementId: "G-RGFP8WLWRC"
+  apiKey: "AIzaSyDtdlt6la21Lbdw2MQ2IgClynkygop-j9o",
+  authDomain: "bailarn-202308.firebaseapp.com",
+  databaseURL: "https://bailarn-202308.firebaseio.com",
+  projectId: "bailarn-202308",
+  storageBucket: "bailarn-202308.appspot.com",
+  messagingSenderId: "694840718487",
+  appId: "1:694840718487:web:652fbc5a7921ff08c8a5d2"
 };
 
 // Initialize Firebase

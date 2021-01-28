@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import { Notice } from "../../_metronic/_partials/controls";
 // import axios from "axios";
 import SVG from "react-inlinesvg";
@@ -27,34 +28,12 @@ export function HomePage() {
           {/* Header */}
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Features Overview
+              About
                 </h3>
           </div>
 
           {/* Body */}
           <div className="card-body pt-2">
-            <div className="d-flex align-items-center mb-10">
-              <div className="symbol symbol-40 symbol-light-primary mr-5">
-                <span className="symbol-label">
-                  <span className="svg-icon svg-icon-lg svg-icon-primary">
-                    <SVG
-                      className="h-75 align-self-end"
-                      src={toAbsoluteUrl("/media/svg/icons/Home/Library.svg")}
-                    ></SVG>
-                  </span>
-                </span>
-              </div>
-
-              <div className="d-flex flex-column font-weight-bold">
-                <a
-                  href="/tokenizer"
-                  className="text-dark text-hover-primary mb-1 font-size-lg"
-                >
-                  Tokenization
-                    </a>
-                <span>identify word boundaries and divide inputs into a meaningful unit as a word.</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>

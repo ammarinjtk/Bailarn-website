@@ -36,6 +36,9 @@ const useStyles = makeStyles(theme => ({
     result: {
         marginLeft: theme.spacing(40),
         marginRight: theme.spacing(40),
+        position: 'relative',
+        overflow: 'auto',
+        maxHeight: 600,
     },
     textField: {
         marginLeft: theme.spacing(1),
@@ -118,8 +121,7 @@ export function TokenizerPage() {
 
     const loadTokenizerModel = async () => {
         setLoading(true);
-        // const model = await tf.loadModel("https://raw.githubusercontent.com/ammarinjtk/thai-nlp/master/src/models/tokenizer/model.json");
-        tf.loadModel("https://raw.githubusercontent.com/ammarinjtk/thai-nlp/master/src/models/tokenizer/model.json")
+        tf.loadModel("https://raw.githubusercontent.com/ammarinjtk/Bailarn-website/master/src/app/modules/NLP/models/tokenizer/model.json")
             .then((model) => {
                 setTokenizer(model);
                 setLoading(false);
@@ -235,7 +237,7 @@ export function TokenizerPage() {
                     onClick={handleSubmit}
                     className={`btn btn-primary font-weight-bold px-9 py-4 my-3`}
                 >
-                    <span>Submit</span>
+                    <span>Analyse</span>
                     {loading && <span className="ml-3 spinner spinner-white"></span>}
                 </button>
             </div>
@@ -245,7 +247,7 @@ export function TokenizerPage() {
             {outputs && outputs.length > 0 && (
                 <Card className={classes.result} style={{ marginTop: 30 }}>
                     <CardHeader title={"Results"} />
-                    <CardBody component="nav" style={{ justifyContent: "center" }} >
+                    <CardBody>
                         <div className={classes.resultList}>
                             <List >
                                 {outputs.map((text, idx) => {
