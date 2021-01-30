@@ -9,7 +9,7 @@ import "../../../../_metronic/_assets/sass/pages/login/classic/login-1.scss";
 export function AuthPage() {
   return (
     <>
-      <div className="d-flex flex-column flex-root" style={{ "overflow-y": "auto" }}>
+      <div className="d-flex flex-column flex-root">
         {/*begin::Login*/}
         <div
           className="login login-1 login-signin-on d-flex flex-column flex-lg-row flex-row-fluid bg-white"
