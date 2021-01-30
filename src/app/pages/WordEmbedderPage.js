@@ -210,7 +210,7 @@ export function WordEmbedderPage() {
                 dist_list.push({
                     w1: word_list[0],
                     w2: word_list[1],
-                    distance: d
+                    distance: parseFloat(d).toFixed(4)
                 });
             };
 
@@ -252,29 +252,29 @@ export function WordEmbedderPage() {
                         <ListItem style={{ display: "flex", flexWrap: "wrap" }}>
                             <TextValidator
                                 required
-                                label={"Word #1"}
+                                label={"#1"}
                                 onChange={handleChange("firstWord")}
                                 value={inputs.firstWord}
                                 className={classes.textValidator}
-                                style={{ width: 100, marginLeft: 10, marginRight: 10 }}
+                                style={{ width: 65, marginRight: 5 }}
                                 variant="outlined"
                             />
                             <TextValidator
                                 required
-                                label={"Word #2"}
+                                label={"#2"}
                                 onChange={handleChange("secondWord")}
                                 value={inputs.secondWord}
                                 className={classes.textValidator}
-                                style={{ width: 100, marginLeft: 10, marginRight: 10 }}
+                                style={{ width: 65, marginRight: 5 }}
                                 variant="outlined"
                             />
                             <TextValidator
                                 required
-                                label={"Word #3"}
+                                label={"#3"}
                                 onChange={handleChange("thirdWord")}
                                 value={inputs.thirdWord}
                                 className={classes.textValidator}
-                                style={{ width: 100, marginLeft: 10, marginRight: 10 }}
+                                style={{ width: 65, marginRight: 5 }}
                                 variant="outlined"
                             />
                         </ListItem>

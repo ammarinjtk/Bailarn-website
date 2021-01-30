@@ -237,6 +237,7 @@ export function TokenizerPage() {
                     <span>{" "}</span>
                     <a
                         target="_blank"
+                        rel="noopener noreferrer"
                         href="https://pt-br.facebook.com/notes/prachya-boonkwan/nlp-%E0%B9%84%E0%B8%97%E0%B8%A2-%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B9%84%E0%B8%9B%E0%B9%84%E0%B8%AB%E0%B8%99%E0%B8%88%E0%B8%A3%E0%B8%B4%E0%B8%87%E0%B8%AB%E0%B8%A3%E0%B8%B7%E0%B8%AD-tldr/10154811091686242/"
                     >
                         post
