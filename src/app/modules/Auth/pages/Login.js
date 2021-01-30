@@ -58,6 +58,10 @@ function Login(props) {
         <p className="text-muted font-weight-semi-bold">
           Connect with your google email to sign in.
         </p>
+        <br />
+        <p className="text-muted font-weight-semi-bold">
+          * This website is only the showcase of my graduation project. Any of your information will not be collected or stored.
+        </p>
       </div>
       {/* end::Head */}
 
