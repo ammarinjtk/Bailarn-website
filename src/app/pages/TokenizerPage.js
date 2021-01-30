@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, shallowEqual } from "react-redux";
+// import { useSelector, shallowEqual } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import * as tf from '@tensorflow/tfjs';
@@ -8,6 +8,7 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
+import Chip from '@material-ui/core/Chip';
 
 import { LayoutSplashScreen } from "../../_metronic/layout";
 import { Notice } from "../../_metronic/_partials/controls";
@@ -20,10 +21,8 @@ import {
     PAD_CHAR_INDEX,
     UNKNOW_CHAR_INDEX,
     CHAR_START_INDEX,
-    NUM_CHARS,
     PAD_TAG_INDEX,
-    NON_SEGMENT_TAG_INDEX,
-    TAG_START_INDEX
+    NON_SEGMENT_TAG_INDEX
 } from "../modules/NLP/utils/tokenizer";
 import { pad, build_tag_index } from "../modules/NLP/utils/utils";
 
@@ -34,8 +33,8 @@ const useStyles = makeStyles(theme => ({
         flexWrap: 'wrap',
     },
     result: {
-        marginLeft: theme.spacing(40),
-        marginRight: theme.spacing(40),
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
         position: 'relative',
         overflow: 'auto',
         maxHeight: 600,
@@ -49,16 +48,18 @@ const useStyles = makeStyles(theme => ({
         marginRight: theme.spacing(1),
     },
     validatorForm: {
-        marginLeft: 50,
-        marginRight: 50
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1)
     },
     resultList: {
         width: '100%',
-        marginBottom: theme.spacing(0.1),
+        marginBottom: theme.spacing(1),
         height: 500,
         backgroundColor: theme.palette.background.paper,
+    },
+    chip: {
+        margin: theme.spacing(0.5),
     }
-
 }));
 
 export function TokenizerPage() {
@@ -95,12 +96,12 @@ export function TokenizerPage() {
     const history = useHistory();
 
     // Use `authToken` as the authenication token for other services by axios
-    const { authToken } = useSelector(
-        ({ auth }) => ({
-            authToken: auth.authToken,
-        }),
-        shallowEqual
-    );
+    // const { authToken } = useSelector(
+    //     ({ auth }) => ({
+    //         authToken: auth.authToken,
+    //     }),
+    //     shallowEqual
+    // );
 
     const initTokenizerPage = () => {
         setPageLoading(true);
@@ -200,14 +201,49 @@ export function TokenizerPage() {
                         href="https://gitlab.com/sertis/data-analyst"
                     >
                         Tokenization
-            </a>
-                    <span>{" "}</span>The process of identifying the word boundaries in Thai language to divide the inputs into a meaningful unit as a word.
-          </span>
+                    </a>
+                    <span>{" "}</span>, also known as word segmentation, is the process of identifying the word boundaries to divide the inputs into a meaningful unit as a word.
+                </span>
             </Notice>
 
             <Card className="example example-compact">
-                <CardHeader title={"Tokenizer Inputs"} />
+                <CardHeader title={"What is Tokenization?"} />
                 <CardBody>
+                    <span>Tokenization is a fundamental pre-processing step for NLP models. Given a character sequence (sentence), tokenization is the task of chopping it up into pieces, called tokens.</span>
+                    <br /><br />
+                    <span>Here is an example of the tokenization:</span>
+                    <br /><br />
+                    <div>
+                        <span style={{ marginLeft: 30 }}>Input: สวัสดีตอนเช้า เป็นยังไงบ้างครับ</span>
+                    </div>
+                    <div>
+                        <span style={{ marginLeft: 30 }}>Output: </span>
+                        <Chip label="สวัสดี" className={classes.chip} variant="outlined" />
+                        <Chip label="ตอน" className={classes.chip} variant="outlined" />
+                        <Chip label="เช้า" className={classes.chip} variant="outlined" />
+                        <Chip label="เป็น" className={classes.chip} variant="outlined" />
+                        <Chip label="ยัง" className={classes.chip} variant="outlined" />
+                        <Chip label="ไง" className={classes.chip} variant="outlined" />
+                        <Chip label="บ้าง" className={classes.chip} variant="outlined" />
+                        <Chip label="ครับ" className={classes.chip} variant="outlined" />
+                    </div>
+                    <br />
+                    <span>While the tokenization is considered relatively simple in English language, it is still an open problem in languages without explicitly defined word delimiters, including Thai language.</span>
+                    <span>In short, researches in tokenization for Thai started around 1990. Since then, there have been several algorithms being proposed to address the problem, which can be clustered into two categoires: Dictionary-based and Machine-learning-based.</span>
+                    <br /><br />
+                    <span>Generally, each algorithm has its own advantage and disadvantage. Dictationary-based algorithms are fast but less capable of encoutering unknown words. While the machine-learning-based methods are qualitatively better and more adaptable to different data sets from different domains; however, thier require much more computation on training.</span>
+                    <br /><br />
+                    <span>If you interested more in why the tokenization in Thai are more difficult than others, you can find more details in this</span>
+                    <span>{" "}</span>
+                    <a
+                        target="_blank"
+                        href="https://pt-br.facebook.com/notes/prachya-boonkwan/nlp-%E0%B9%84%E0%B8%97%E0%B8%A2-%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B9%84%E0%B8%9B%E0%B9%84%E0%B8%AB%E0%B8%99%E0%B8%88%E0%B8%A3%E0%B8%B4%E0%B8%87%E0%B8%AB%E0%B8%A3%E0%B8%B7%E0%B8%AD-tldr/10154811091686242/"
+                    >
+                        post
+                    </a>
+                </CardBody>
+                <CardBody>
+                    <span>You can try it yourself!</span>
                     <ValidatorForm className={classes.validatorForm} onSubmit={() => { }}>
                         <TextValidator
                             required

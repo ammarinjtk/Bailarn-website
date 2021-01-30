@@ -4,7 +4,7 @@
 
 import React from "react";
 import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 import { Routes } from "../app/Routes";
 import { I18nProvider } from "../_metronic/i18n";
@@ -19,7 +19,7 @@ export default function App({ store, persistor, basename }) {
         {/* Add high level `Suspense` in case if was not handled inside the React tree. */}
         <React.Suspense fallback={<LayoutSplashScreen />}>
           {/* Override `basename` (e.g: `homepage` in `package.json`) */}
-          <BrowserRouter basename={basename}>
+          <HashRouter basename={basename}>
             {/*This library only returns the location that has been active before the recent location change in the current window lifetime.*/}
             <MaterialThemeProvider>
               {/* Provide `react-intl` context synchronized with Redux state.  */}
@@ -28,7 +28,7 @@ export default function App({ store, persistor, basename }) {
                 <Routes />
               </I18nProvider>
             </MaterialThemeProvider>
-          </BrowserRouter>
+          </HashRouter>
         </React.Suspense>
       </PersistGate>
     </Provider>

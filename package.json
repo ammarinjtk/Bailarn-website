@@ -1,8 +1,7 @@
 {
   "name": "bailarn-website",
-  "homepage": "https://ammarinjtk.github.io/Bailarn-website/",
+  "homepage": "https://ammarinjtk.github.io/Bailarn-website",
   "version": "1.0.0",
-  "private": true,
   "scripts": {
     "start": "react-scripts start -o",
     "build": "react-scripts build",
