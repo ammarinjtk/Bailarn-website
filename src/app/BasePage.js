@@ -3,6 +3,7 @@ import { Redirect, Switch } from "react-router-dom";
 import { LayoutSplashScreen, ContentRoute } from "../_metronic/layout";
 
 import { TokenizerPage } from "./pages/TokenizerPage";
+import { WordEmbedderPage } from "./pages/WordEmbedderPage";
 import { HomePage } from "./pages/HomePage";
 
 export default function BasePage() {
@@ -20,6 +21,7 @@ export default function BasePage() {
         }
         <ContentRoute path="/home" component={HomePage} />
         <ContentRoute path="/tokenizer" component={TokenizerPage} />
+        <ContentRoute path="/word-embedder" component={WordEmbedderPage} />
         <Redirect to="/error" />
       </Switch>
     </Suspense>

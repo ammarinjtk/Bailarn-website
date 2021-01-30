@@ -57,7 +57,7 @@ export function HomePage() {
                   <span className="svg-icon svg-icon-lg svg-icon-primary">
                     <SVG
                       className="h-75 align-self-end"
-                      src={toAbsoluteUrl("/media/svg/icons/Home/Library.svg")}
+                      src={toAbsoluteUrl("/media/svg/icons/Text/Paragraph.svg")}
                     ></SVG>
                   </span>
                 </span>
@@ -65,6 +65,25 @@ export function HomePage() {
               <div className="d-flex flex-column font-weight-bold">
                 <NavLink className="menu-link" to="/tokenizer">
                   <span className="text-dark text-hover-primary mb-1 font-size-lg">Tokenization</span>
+                </NavLink>
+                <span>identify word boundaries and divide inputs into a meaningful unit as a word.</span>
+              </div>
+            </div>
+
+            <div className="d-flex align-items-center mb-10">
+              <div className="symbol symbol-40 symbol-light-primary mr-5">
+                <span className="symbol-label">
+                  <span className="svg-icon svg-icon-lg svg-icon-primary">
+                    <SVG
+                      className="h-75 align-self-end"
+                      src={toAbsoluteUrl("/media/svg/icons/Files/Selected-file.svg")}
+                    ></SVG>
+                  </span>
+                </span>
+              </div>
+              <div className="d-flex flex-column font-weight-bold">
+                <NavLink className="menu-link" to="/word-embedder">
+                  <span className="text-dark text-hover-primary mb-1 font-size-lg">Word Embedding</span>
                 </NavLink>
                 <span>identify word boundaries and divide inputs into a meaningful unit as a word.</span>
               </div>

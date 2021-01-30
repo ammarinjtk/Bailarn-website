@@ -46,9 +46,21 @@ export function AsideMenuList({ layoutProps }) {
         >
           <NavLink className="menu-link" to="/tokenizer">
             <span className="svg-icon menu-icon">
-              <SVG src={toAbsoluteUrl("/media/svg/icons/Home/Library.svg")} />
+              <SVG src={toAbsoluteUrl("/media/svg/icons/Text/Paragraph.svg")} />
             </span>
             <span className="menu-text">Tokenization</span>
+          </NavLink>
+        </li>
+
+        <li
+          className={`menu-item ${getMenuItemActive("/word-embedder", false)}`}
+          aria-haspopup="true"
+        >
+          <NavLink className="menu-link" to="/word-embedder">
+            <span className="svg-icon menu-icon">
+              <SVG src={toAbsoluteUrl("/media/svg/icons/Files/Selected-file.svg")} />
+            </span>
+            <span className="menu-text">Word Embedding</span>
           </NavLink>
         </li>
         {/*end::1 Level*/}
