@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/Bailarn-website/precache-manifest.162cf417ec2e567dd82db1df2062672b.js"
+  "/Bailarn-website/precache-manifest.a79d9c59aea42203be244656545f1825.js"
 );
 
 self.addEventListener('message', (event) => {
