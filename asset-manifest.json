@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Bailarn-website/static/css/main.206d9cf6.chunk.css",
-    "main.js": "/Bailarn-website/static/js/main.cc9e5c56.chunk.js",
-    "main.js.map": "/Bailarn-website/static/js/main.cc9e5c56.chunk.js.map",
+    "main.js": "/Bailarn-website/static/js/main.d2b9b5fb.chunk.js",
+    "main.js.map": "/Bailarn-website/static/js/main.d2b9b5fb.chunk.js.map",
     "runtime-main.js": "/Bailarn-website/static/js/runtime-main.ec41533c.js",
     "runtime-main.js.map": "/Bailarn-website/static/js/runtime-main.ec41533c.js.map",
     "static/css/2.1188cc23.chunk.css": "/Bailarn-website/static/css/2.1188cc23.chunk.css",
-    "static/js/2.3f771f41.chunk.js": "/Bailarn-website/static/js/2.3f771f41.chunk.js",
-    "static/js/2.3f771f41.chunk.js.map": "/Bailarn-website/static/js/2.3f771f41.chunk.js.map",
+    "static/js/2.a5f63495.chunk.js": "/Bailarn-website/static/js/2.a5f63495.chunk.js",
+    "static/js/2.a5f63495.chunk.js.map": "/Bailarn-website/static/js/2.a5f63495.chunk.js.map",
     "index.html": "/Bailarn-website/index.html",
-    "precache-manifest.a8a70d677d2f7a909df31f7d0b6a0a10.js": "/Bailarn-website/precache-manifest.a8a70d677d2f7a909df31f7d0b6a0a10.js",
+    "precache-manifest.162cf417ec2e567dd82db1df2062672b.js": "/Bailarn-website/precache-manifest.162cf417ec2e567dd82db1df2062672b.js",
     "service-worker.js": "/Bailarn-website/service-worker.js",
     "static/css/2.1188cc23.chunk.css.map": "/Bailarn-website/static/css/2.1188cc23.chunk.css.map",
     "static/css/main.206d9cf6.chunk.css.map": "/Bailarn-website/static/css/main.206d9cf6.chunk.css.map",
@@ -21,8 +21,8 @@
   "entrypoints": [
     "static/js/runtime-main.ec41533c.js",
     "static/css/2.1188cc23.chunk.css",
-    "static/js/2.3f771f41.chunk.js",
+    "static/js/2.a5f63495.chunk.js",
     "static/css/main.206d9cf6.chunk.css",
-    "static/js/main.cc9e5c56.chunk.js"
+    "static/js/main.d2b9b5fb.chunk.js"
   ]
 }
