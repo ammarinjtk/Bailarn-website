@@ -45,7 +45,7 @@
     "@tanem/svg-injector": "8.0.50",
     "@tensorflow/tfjs": "0.15.3",
     "apexcharts": "3.19.2",
-    "axios": "0.19.2",
+    "axios": "0.21.1",
     "axios-mock-adapter": "1.18.1",
     "bootstrap": "4.5.0",
     "clipboard-copy": "3.1.0",
