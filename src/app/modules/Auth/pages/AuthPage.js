@@ -41,7 +41,6 @@ export function AuthPage() {
                 </h3>
                 <p className="font-weight-lighter text-white opacity-80">
                   The website to provide demos of the Natural Language Processing (NLP) tools available for Thai language.
-                  And the purpose of this website is to gain clarity and better understand which achievements can be leveraged as practical tools.
                 </p>
               </div>
               {/* end:: Aside content */}
@@ -59,7 +58,7 @@ export function AuthPage() {
           {/*begin::Aside*/}
 
           {/*begin::Content*/}
-          <div className="flex-row-fluid d-flex flex-column position-relative p-7 overflow-hidden">
+          <div className="flex-row-fluid d-flex flex-column position-relative p-7">
             {/* begin::Content body */}
             <div className="d-flex flex-column-fluid flex-center mt-30 mt-lg-0">
               <Switch>
