@@ -48,7 +48,15 @@ export function AuthPage() {
               {/* start:: Aside footer for desktop */}
               <div className="d-none flex-column-auto d-lg-flex justify-content-between mt-10">
                 <div className="opacity-70 font-weight-bold	text-white">
-                  &copy; 2021 | Amarin Jettakul
+                  &copy; 2021 |
+                <span>{" "}</span>
+                  <a
+                    target="_blank"
+                    href="https://github.com/ammarinjtk"
+                    rel="noopener noreferrer"
+                  >
+                    Amarin Jettakul
+                </a>
                 </div>
               </div>
               {/* end:: Aside footer for desktop */}
@@ -72,7 +80,15 @@ export function AuthPage() {
             {/* begin::Mobile footer */}
             <div className="d-flex d-lg-none flex-column-auto flex-column flex-sm-row justify-content-between align-items-center mt-5 p-5">
               <div className="text-dark-50 font-weight-bold order-2 order-sm-1 my-2">
-                &copy; 2021 | Amarin Jettakul
+                &copy; 2021 |
+                <span>{" "}</span>
+                <a
+                  target="_blank"
+                  href="https://github.com/ammarinjtk"
+                  rel="noopener noreferrer"
+                >
+                  Amarin Jettakul
+                </a>
               </div>
             </div>
             {/* end::Mobile footer */}

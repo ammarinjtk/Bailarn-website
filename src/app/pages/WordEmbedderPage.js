@@ -331,11 +331,11 @@ export function WordEmbedderPage() {
                         <span>If you are interested more for word embedding, you can find a practical example to comprehend the concept using</span>
                         <span>{"  "}</span>
                         <Button
-                            variant="contained"
                             color="secondary"
                             size="large"
                             className={classes.button}
                             target="_blank"
+                            rel="noopener noreferrer"
                             href="http://projector.tensorflow.org/?config=https://gist.githubusercontent.com/ammarinjtk/7c393efd36b7549f98f2ac8e4898ad69/raw/9db47703cdd1137a9094f975bcc4008d7318848f/config.json"
                         >
                             Embedding Projector

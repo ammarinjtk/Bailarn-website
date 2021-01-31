@@ -9,6 +9,12 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
 import Chip from '@material-ui/core/Chip';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
 
 import { LayoutSplashScreen } from "../../_metronic/layout";
 import { Notice } from "../../_metronic/_partials/controls";
@@ -89,6 +95,12 @@ export function TokenizerPage() {
         text: '',
     });
 
+    // Define `dialog` as the flag to show dialog message when user submitted a task
+    const [dialog, setDialog] = React.useState({
+        show: false,
+        type: ''
+    });
+
     // Define `outputs` for the Tokenizer model
     const [outputs, setOutputs] = React.useState([]);
 
@@ -135,10 +147,16 @@ export function TokenizerPage() {
 
     const handleSubmit = () => {
         setLoading(true);
-        getPrediction().then((results) => {
-            setOutputs(results);
+
+        if (inputs.text.length > 60) {
+            setDialog({ show: true, type: "invalid_char" });
             setLoading(false);
-        });
+        } else {
+            getPrediction().then((results) => {
+                setOutputs(results);
+                setLoading(false);
+            });
+        };
     };
 
     const getPrediction = async () => {
@@ -300,6 +318,28 @@ export function TokenizerPage() {
                 </Card>
             )
             }
+
+            {/* Show invalid character lengths dialog */}
+            {dialog.type === "invalid_char" && (
+                <Dialog
+                    open={dialog.show}
+                    onClose={() => { setDialog({ show: false, type: "" }) }}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">Failed to analyse your inputs!</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Sorry, your inputs contain more than <code>60 characters</code>. Please try again.
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => { setDialog({ show: false, type: "" }) }} color="primary" autoFocus>
+                            OK
+              </Button>
+                    </DialogActions>
+                </Dialog>
+            )}
         </>
     );
 };
