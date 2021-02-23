@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a9bfa458b303c2ffe632c63a53392e94",
+    "revision": "b74206e1b97a915419a79b30043d2d54",
     "url": "/Bailarn-website/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Bailarn-website/static/css/2.1188cc23.chunk.css"
   },
   {
-    "revision": "f17bdf3e27b9a9605024",
+    "revision": "114b5276532c7806beb0",
     "url": "/Bailarn-website/static/css/main.206d9cf6.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Bailarn-website/static/js/2.4fb9988a.chunk.js"
   },
   {
-    "revision": "f17bdf3e27b9a9605024",
-    "url": "/Bailarn-website/static/js/main.e981fdef.chunk.js"
+    "revision": "114b5276532c7806beb0",
+    "url": "/Bailarn-website/static/js/main.cd5fcbd9.chunk.js"
   },
   {
     "revision": "c62059cb71a1542df16f",
