@@ -5,7 +5,7 @@ import { Notice } from "../../_metronic/_partials/controls";
 import SVG from "react-inlinesvg";
 import { toAbsoluteUrl } from "../../_metronic/_helpers";
 
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
