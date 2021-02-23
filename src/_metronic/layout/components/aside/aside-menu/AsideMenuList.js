@@ -63,6 +63,30 @@ export function AsideMenuList({ layoutProps }) {
             <span className="menu-text">Word Embedding</span>
           </NavLink>
         </li>
+
+        <li
+          className={`menu-item ${getMenuItemActive("/ner", false)}`}
+          aria-haspopup="true"
+        >
+          <NavLink className="menu-link" to="/ner">
+            <span className="svg-icon menu-icon">
+              <SVG src={toAbsoluteUrl("/media/svg/icons/Design/Select.svg")} />
+            </span>
+            <span className="menu-text">Named Entity Recognition</span>
+          </NavLink>
+        </li>
+
+        <li
+          className={`menu-item ${getMenuItemActive("#", false)}`}
+          aria-haspopup="true"
+        >
+          <NavLink className="menu-link" to="#">
+            <span className="svg-icon menu-icon">
+              <SVG src={toAbsoluteUrl("/media/svg/icons/Design/Difference.svg")} />
+            </span>
+            <span className="menu-text">Part of Speech Tagging</span>
+          </NavLink>
+        </li>
         {/*end::1 Level*/}
         {/* end:: section */}
 
@@ -70,6 +94,30 @@ export function AsideMenuList({ layoutProps }) {
         <li className="menu-section ">
           <h4 className="menu-text">NLP Application Tasks</h4>
           <i className="menu-icon flaticon-more-v2"></i>
+        </li>
+
+        <li
+          className={`menu-item ${getMenuItemActive("#", false)}`}
+          aria-haspopup="true"
+        >
+          <NavLink className="menu-link" to="#">
+            <span className="svg-icon menu-icon">
+              <SVG src={toAbsoluteUrl("/media/svg/icons/Files/User-folder.svg")} />
+            </span>
+            <span className="menu-text">Sentiment Analysis</span>
+          </NavLink>
+        </li>
+
+        <li
+          className={`menu-item ${getMenuItemActive("#", false)}`}
+          aria-haspopup="true"
+        >
+          <NavLink className="menu-link" to="#">
+            <span className="svg-icon menu-icon">
+              <SVG src={toAbsoluteUrl("/media/svg/icons/Design/Pen-tool-vector.svg")} />
+            </span>
+            <span className="menu-text">Multi-label Text Classification</span>
+          </NavLink>
         </li>
         {/* end:: section */}
       </ul>

@@ -5,8 +5,6 @@ import { useHistory } from "react-router-dom";
 import * as tf from '@tensorflow/tfjs';
 import { makeStyles } from '@material-ui/core/styles';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
 import Chip from '@material-ui/core/Chip';
 import Dialog from '@material-ui/core/Dialog';
@@ -15,12 +13,14 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
+import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
 
 import { LayoutSplashScreen } from "../../_metronic/layout";
 import { Notice } from "../../_metronic/_partials/controls";
 import { Card, CardBody, CardHeader } from "../../_metronic/_partials/controls/Card";
 import {
-    SEQUENCE_LENGTH,
+    SEQUENCE_LENGTH as TOKEN_SEQUENCE_LENGTH,
     SPACEBAR,
     CHARACTER_LIST,
     READABLE_PAD_CHAR,
@@ -30,8 +30,12 @@ import {
     PAD_TAG_INDEX,
     NON_SEGMENT_TAG_INDEX
 } from "../modules/NLP/utils/tokenizer";
-import { pad, build_tag_index } from "../modules/NLP/utils/utils";
-
+import {
+    TAG_LIST,
+    SEQUENCE_LENGTH as NER_SEQUENCE_LENGTH,
+    TAG_DESCRIPTIONS
+} from "../modules/NLP/utils/ner";
+import { pad, build_tag_index, swap } from "../modules/NLP/utils/utils";
 
 const useStyles = makeStyles(theme => ({
     result: {
@@ -39,7 +43,6 @@ const useStyles = makeStyles(theme => ({
         marginRight: theme.spacing(1),
         position: 'relative',
         overflow: 'auto',
-        maxHeight: 600,
     },
     textValidator: {
         marginLeft: theme.spacing(1),
@@ -52,19 +55,19 @@ const useStyles = makeStyles(theme => ({
     resultList: {
         width: '100%',
         marginBottom: theme.spacing(1),
-        height: 500,
         backgroundColor: theme.palette.background.paper,
     },
     chip: {
-        margin: theme.spacing(0.5),
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
     }
 }));
 
-export function TokenizerPage() {
+export function NERPage() {
 
     // Init page load
     useEffect(() => {
-        initTokenizerPage();
+        initNERPage();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -75,6 +78,15 @@ export function TokenizerPage() {
 
     // Define `charIndex` as the char2idx of the Tokenizer
     const [charIndex, setCharIndex] = useState(undefined);
+
+    // Define `nerModel` as the NER model
+    const [nerModel, setNerModel] = useState(undefined);
+
+    // Define `tagIndex` as the tag2idx of the NER model
+    const [tagIndex, setTagIndex] = useState(undefined);
+
+    // Define `wordIndex` as the word2idx of the Word embedder
+    const [wordIndex, setWordIndex] = useState(undefined);
 
     // Define `loading` to be used to display loading spinner
     const [loading, setLoading] = useState(true);
@@ -93,7 +105,10 @@ export function TokenizerPage() {
         type: ''
     });
 
-    // Define `outputs` for the Tokenizer model
+    // Define `tokens` used as outputs of the Tokenizer model
+    const [tokens, setTokens] = React.useState([]);
+
+    // Define `outputs` used as outputs of the NER model
     const [outputs, setOutputs] = React.useState([]);
 
     // `History` to manage react router sessions and redirect to specific pages
@@ -107,10 +122,20 @@ export function TokenizerPage() {
     //     shallowEqual
     // );
 
-    const initTokenizerPage = () => {
+    const initNERPage = () => {
         setPageLoading(true);
+
+        // Initialize Tokenizer
         loadCharIndex();
         loadTokenizerModel();
+
+        // Initialize Word embedder
+        loadWordIndex();
+
+        // Initialize NER model
+        loadTagIndex();
+        loadNERModel();
+
         setPageLoading(false);
     };
 
@@ -137,27 +162,46 @@ export function TokenizerPage() {
             });
     };
 
-    const handleSubmit = () => {
-        setLoading(true);
-
-        if (inputs.text.length > 60) {
-            setDialog({ show: true, type: "invalid_char" });
-            setLoading(false);
-        } else {
-            getPrediction().then((results) => {
-                setOutputs(results);
-                setLoading(false);
-            });
-        };
+    const loadTagIndex = () => {
+        const tag2idx = build_tag_index(TAG_LIST, 0);
+        setTagIndex(tag2idx);
     };
 
-    const getPrediction = async () => {
+    const loadNERModel = async () => {
+        setLoading(true);
+        tf.loadModel("https://raw.githubusercontent.com/ammarinjtk/Bailarn-website/master/src/app/modules/NLP/models/ner/model.json")
+            .then((model) => {
+                setNerModel(model);
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.log(error);
+                history.push("/error");
+            });
+    };
+
+    const loadWordIndex = () => {
+        fetch(
+            "https://raw.githubusercontent.com/ammarinjtk/Bailarn-website/master/src/app/modules/NLP/models/ner/ner_word_index.json"
+        )
+            .then(res => res.json())
+            .then(out => {
+                let word2idx = out;
+                word2idx["<PAD>"] = 0;
+                console.log("Index for UNK word: ", word2idx["UNK"]);
+                console.log("Index for PAD word: ", word2idx["<PAD>"]);
+                setWordIndex(word2idx);
+            })
+            .catch(err => console.error(err));
+    };
+
+    const getTokenizerPrediction = async (words) => {
         return new Promise((resolve, _) => {
             let x = [];
             let readable_x = [];
 
-            for (let i = 0; i < inputs.text.length; i++) {
-                let char = inputs.text[i];
+            for (let i = 0; i < words.length; i++) {
+                let char = words[i];
                 if (char in charIndex) {
                     x.push(charIndex[char]);
                 } else {
@@ -167,8 +211,8 @@ export function TokenizerPage() {
             }
 
             // padding
-            x = pad([x], SEQUENCE_LENGTH, PAD_CHAR_INDEX);
-            readable_x = pad([readable_x], SEQUENCE_LENGTH, READABLE_PAD_CHAR);
+            x = pad([x], TOKEN_SEQUENCE_LENGTH, PAD_CHAR_INDEX);
+            readable_x = pad([readable_x], TOKEN_SEQUENCE_LENGTH, READABLE_PAD_CHAR);
 
             // casting
             x = tf.tensor2d(x);
@@ -200,6 +244,75 @@ export function TokenizerPage() {
         });
     };
 
+    const getNERPrediction = async (words) => {
+        return new Promise((resolve, _) => {
+            const index2tag = swap(tagIndex);
+
+            let x = [];
+            let readable_x = [];
+
+            for (let i = 0; i < words.length; i++) {
+                let word = words[i];
+                if (word in wordIndex) {
+                    x.push(wordIndex[word]);
+                } else {
+                    x.push("UNK");
+                }
+                readable_x.push(word);
+            }
+
+            x = pad([x], NER_SEQUENCE_LENGTH, 0);
+            console.log(`NER Inputs (x): ${x}`);
+
+            x = tf.tensor2d(x);
+            let output = nerModel.predict(x);
+            console.log(`NER Outputs (output): ${output}`);
+
+            let y_pred = output.argMax(2).flatten().dataSync();
+            console.log(`NER Outputs after argmax (y_pred): ${y_pred}`);
+
+            let decoeded_y_pred = [];
+            for (let i = 0; i < readable_x.length; i++) {
+                decoeded_y_pred.push(index2tag[y_pred[i]]);
+            }
+
+            resolve(decoeded_y_pred);
+        });
+    };
+
+    const handleSubmit = () => {
+        setLoading(true);
+        if (inputs.text.length > 60) {
+            setDialog({ show: true, type: "invalid_char" });
+            setLoading(false);
+        } else {
+            getTokenizerPrediction(inputs.text).then((words) => {
+                console.log(`[getTokenizerPrediction] Get words: ${words}`);
+                setTokens(words);
+                getNERPrediction(words).then((nerTags) => {
+                    setOutputs(nerTags);
+                    setLoading(false);
+                });
+            });
+        };
+    };
+
+    const renderOutput = (tag, index) => {
+        const word = tokens[index];
+        const tag_desc = TAG_DESCRIPTIONS[tag];
+        if (tag_desc) {
+            return (
+                <Tooltip key={`tooltip_${index}`} title={<Typography variant="subtitle2">{tag_desc}</Typography>} interactive>
+                    <Chip key={`chip_${index}`} size="medium" color="secondary" label={word} className={classes.chip} variant="outlined" />
+                </Tooltip>
+            );
+        } else {
+            console.log("word");
+            return (<span className={classes.chip}>{word}</span>)
+        }
+    };
+
+
     return pageLoading ? <LayoutSplashScreen /> : (
         <>
             <Notice icon="flaticon-warning font-primary">
@@ -210,48 +323,30 @@ export function TokenizerPage() {
                         rel="noopener noreferrer"
                         href="https://gitlab.com/sertis/data-analyst"
                     >
-                        Tokenization
+                        Named Entity Recognition (NER)
                     </a>
-                    <span>{" "}</span>, also known as word segmentation, is the process of identifying the word boundaries to divide the inputs into a meaningful unit as a word.
+                    <span>{" "}</span>, also known as entity identification, entity chunking, and entity extraction, is a subtask of information extraction that seeks to locate and classify elements in text into pre-defined categories such as the names of persons, organizations, locations.
                 </span>
             </Notice>
 
             <Card className="example example-compact">
-                <CardHeader title={"What is Tokenization?"} />
+                <CardHeader title={"What is Named Entity Recognition?"} />
                 <CardBody>
-                    <span>Tokenization is a fundamental pre-processing step for NLP models. Given a character sequence (sentence), tokenization is the task of chopping it up into pieces, called tokens.</span>
+                    <span>NER plays a major role in the semantic part of NLP, which, extracts the meaning of words, sentences and their relationships. Basic NER processes structured and unstructured texts by identifying and locating entities, such as persons, organizarions, and so on.</span>
                     <br /><br />
-                    <span>Here is an example of the tokenization:</span>
+                    <span>For example, in the sentence:</span>
                     <br /><br />
                     <div>
-                        <span style={{ marginLeft: 30 }}>Input: สวัสดีตอนเช้า เป็นยังไงบ้างครับ</span>
+                        <span style={{ marginLeft: 30 }}>Input: Mark Zuckerberg is one of the founders of Facebook, a company from the United States</span>
                     </div>
-                    <div>
+                    <div style={{ marginTop: 20 }}>
                         <span style={{ marginLeft: 30 }}>Output: </span>
-                        <Chip label="สวัสดี" color="secondary" className={classes.chip} variant="outlined" />
-                        <Chip label="ตอน" color="secondary" className={classes.chip} variant="outlined" />
-                        <Chip label="เช้า" color="secondary" className={classes.chip} variant="outlined" />
-                        <Chip label="เป็น" color="secondary" className={classes.chip} variant="outlined" />
-                        <Chip label="ยัง" color="secondary" className={classes.chip} variant="outlined" />
-                        <Chip label="ไง" color="secondary" className={classes.chip} variant="outlined" />
-                        <Chip label="บ้าง" color="secondary" className={classes.chip} variant="outlined" />
-                        <Chip label="ครับ" color="secondary" className={classes.chip} variant="outlined" />
+                        <span style={{ marginLeft: 10 }}>{"Person: "}</span><Chip label="Mark Zuckerberg" color="secondary" className={classes.chip} variant="outlined" />
+                        <span style={{ marginLeft: 30 }}>{"Company: "}</span><Chip label="Facebook" color="secondary" className={classes.chip} variant="outlined" />
+                        <span style={{ marginLeft: 30 }}>{"Location: "}</span><Chip label="United States" color="secondary" className={classes.chip} variant="outlined" />
                     </div>
                     <br />
-                    <span>While the tokenization is considered relatively simple in English language, it is still an open problem in languages without explicitly defined word delimiters, including Thai language.</span>
-                    <span>In short, researches in tokenization for Thai started around 1990. Since then, there have been several algorithms being proposed to address the problem, which can be clustered into two categoires: Dictionary-based and Machine-learning-based.</span>
-                    <br /><br />
-                    <span>Generally, each algorithm has its own advantage and disadvantage. Dictationary-based algorithms are fast but less capable of encoutering unknown words. While the machine-learning-based methods are qualitatively better and more adaptable to different data sets from different domains; however, thier require much more computation on training.</span>
-                    <br /><br />
-                    <span>If you interested more in why the tokenization in Thai are more difficult than others, you can find more details in this</span>
-                    <span>{" "}</span>
-                    <a
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href="https://pt-br.facebook.com/notes/prachya-boonkwan/nlp-%E0%B9%84%E0%B8%97%E0%B8%A2-%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B9%84%E0%B8%9B%E0%B9%84%E0%B8%AB%E0%B8%99%E0%B8%88%E0%B8%A3%E0%B8%B4%E0%B8%87%E0%B8%AB%E0%B8%A3%E0%B8%B7%E0%B8%AD-tldr/10154811091686242/"
-                    >
-                        Facebook post by Prachya Boonkwan
-                    </a>
+                    <span>NER plays a key role by identifying and classifying entities in a text. It is the first step in enabling machines to understand what seems to be an unstructured sequence of words. Nevertheless, it is still a long journey to understand a text like a human. One becomes particularly aware of this when going into detail: As we found out NER understands “Mark Zuckerberg” as a person. However, NER can’t differentiate between all the people called “Mark Zuckerberg”.</span>
                 </CardBody>
                 <CardBody>
                     <span>You can try it yourself!</span>
@@ -297,12 +392,8 @@ export function TokenizerPage() {
                     <CardBody>
                         <div className={classes.resultList}>
                             <List >
-                                {outputs.map((text, idx) => {
-                                    return (
-                                        <ListItem key={`text-${idx}`} button>
-                                            <ListItemText primary={text} />
-                                        </ListItem>
-                                    )
+                                {outputs.map((tag, index) => {
+                                    return renderOutput(tag, index)
                                 })}
                             </List>
                         </div>

@@ -202,10 +202,17 @@ function Login(props) {
       </form>
       <div className="separator separator-dashed my-7" />
       <div className="form-group d-flex flex-wrap justify-content-center align-items-center">
-        <span>Or Sign In with Google Account</span>
+        <div className="text-center mb-10 mb-lg-10">
+          <h3 className="font-size-h3">
+            Or Sign In with Google Account
+        </h3>
+          <p className="text-muted font-weight-semi-bold">
+            Signing in with Google Account only means that you will be able to see your name and profile picture.
+        </p>
+        </div>
         <GoogleLoginButton
           className={`btn btn-primary px-9 py-4 my-3`}
-          style={{ background: "#333333", marginTop: 20 }}
+          style={{ background: "#333333", marginTop: 5 }}
           activeStyle={{ background: '#555555' }}
           onClick={callGoogleSignIn}
         />
