@@ -1,7 +1,5 @@
 ## Bailarn Website
 
-[![Build Status](https://travis-ci.org/ammarinjtk/thai-nlp.svg?branch=master)](https://travis-ci.org/ammarinjtk/thai-nlp)
-
 The project aims to develop Thai NLP Library based on Deep Learning techniques. With this library, users can train the model on their own dataset using the provided deep learning model structure and utilities. Moreover, Thai NLP Library also provides pre-trained models to process Thai text instantly. All pre-trained models was evaluated and compared across various deep learning techniques proposed in the previous researches in the experiments.
 
 - `/tokenizer`: Identify the boundaries between texts in natural languages to divide these texts into the meaningful unit as word.
