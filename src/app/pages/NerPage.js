@@ -15,6 +15,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
+import SendIcon from '@material-ui/icons/Send';
 
 import { LayoutSplashScreen } from "../../_metronic/layout";
 import { Notice } from "../../_metronic/_partials/controls";
@@ -60,7 +64,10 @@ const useStyles = makeStyles(theme => ({
     chip: {
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
-    }
+    },
+    paper: {
+        margin: theme.spacing(1),
+    },
 }));
 
 export function NERPage() {
@@ -217,30 +224,61 @@ export function NERPage() {
             // casting
             x = tf.tensor2d(x);
 
-            let tokenizer_outputs = tokenizer.predict(x);
+            if (!tokenizer) {
+                loadTokenizerModel().then(() => {
+                    let tokenizer_outputs = tokenizer.predict(x);
 
-            let y_pred = tokenizer_outputs.argMax(2);
-            y_pred = y_pred.flatten();
+                    let y_pred = tokenizer_outputs.argMax(2);
+                    y_pred = y_pred.flatten();
 
-            let all_result = [];
-            for (let sample_idx = 0; sample_idx < readable_x[0].length; sample_idx++) {
-                let label = y_pred.get([sample_idx]);
-                let char = readable_x[0][sample_idx];
-                // Pad label
-                if (label === PAD_TAG_INDEX) continue;
-                // Pad char
-                if (char === READABLE_PAD_CHAR) continue;
-                all_result.push(char);
-                // Skip tag for spacebar character
-                if (char === SPACEBAR) continue;
-                // Tag at segmented point
-                if (label !== NON_SEGMENT_TAG_INDEX) {
-                    all_result.push("|");
+                    let all_result = [];
+                    for (let sample_idx = 0; sample_idx < readable_x[0].length; sample_idx++) {
+                        let label = y_pred.get([sample_idx]);
+                        let char = readable_x[0][sample_idx];
+                        // Pad label
+                        if (label === PAD_TAG_INDEX) continue;
+                        // Pad char
+                        if (char === READABLE_PAD_CHAR) continue;
+                        all_result.push(char);
+                        // Skip tag for spacebar character
+                        if (char === SPACEBAR) continue;
+                        // Tag at segmented point
+                        if (label !== NON_SEGMENT_TAG_INDEX) {
+                            all_result.push("|");
+                        }
+                    }
+                    const results = all_result.join("").split("|").filter(function (el) { return el !== "" });
+                    console.log("Tokenizer outputs: ", results);
+                    resolve(results);
+                });
+            } else {
+                let tokenizer_outputs = tokenizer.predict(x);
+
+                let y_pred = tokenizer_outputs.argMax(2);
+                y_pred = y_pred.flatten();
+
+                let all_result = [];
+                for (let sample_idx = 0; sample_idx < readable_x[0].length; sample_idx++) {
+                    let label = y_pred.get([sample_idx]);
+                    let char = readable_x[0][sample_idx];
+                    // Pad label
+                    if (label === PAD_TAG_INDEX) continue;
+                    // Pad char
+                    if (char === READABLE_PAD_CHAR) continue;
+                    all_result.push(char);
+                    // Skip tag for spacebar character
+                    if (char === SPACEBAR) continue;
+                    // Tag at segmented point
+                    if (label !== NON_SEGMENT_TAG_INDEX) {
+                        all_result.push("|");
+                    }
                 }
-            }
-            const results = all_result.join("").split("|").filter(function (el) { return el !== "" });
-            console.log("Tokenizer outputs: ", results);
-            resolve(results);
+                const results = all_result.join("").split("|").filter(function (el) { return el !== "" });
+                console.log("Tokenizer outputs: ", results);
+                resolve(results);
+            };
+
+
         });
     };
 
@@ -256,7 +294,7 @@ export function NERPage() {
                 if (word in wordIndex) {
                     x.push(wordIndex[word]);
                 } else {
-                    x.push("UNK");
+                    x.push(wordIndex["UNK"]);
                 }
                 readable_x.push(word);
             }
@@ -265,18 +303,35 @@ export function NERPage() {
             console.log(`NER Inputs (x): ${x}`);
 
             x = tf.tensor2d(x);
-            let output = nerModel.predict(x);
-            console.log(`NER Outputs (output): ${output}`);
+            if (!nerModel) {
+                loadNERModel().then(() => {
+                    let output = nerModel.predict(x);
+                    console.log(`NER Outputs (output): ${output}`);
 
-            let y_pred = output.argMax(2).flatten().dataSync();
-            console.log(`NER Outputs after argmax (y_pred): ${y_pred}`);
+                    let y_pred = output.argMax(2).flatten().dataSync();
+                    console.log(`NER Outputs after argmax (y_pred): ${y_pred}`);
 
-            let decoeded_y_pred = [];
-            for (let i = 0; i < readable_x.length; i++) {
-                decoeded_y_pred.push(index2tag[y_pred[i]]);
-            }
+                    let decoeded_y_pred = [];
+                    for (let i = 0; i < readable_x.length; i++) {
+                        decoeded_y_pred.push(index2tag[y_pred[i]]);
+                    }
 
-            resolve(decoeded_y_pred);
+                    resolve(decoeded_y_pred);
+                });
+            } else {
+                let output = nerModel.predict(x);
+                console.log(`NER Outputs (output): ${output}`);
+
+                let y_pred = output.argMax(2).flatten().dataSync();
+                console.log(`NER Outputs after argmax (y_pred): ${y_pred}`);
+
+                let decoeded_y_pred = [];
+                for (let i = 0; i < readable_x.length; i++) {
+                    decoeded_y_pred.push(index2tag[y_pred[i]]);
+                }
+
+                resolve(decoeded_y_pred);
+            };
         });
     };
 
@@ -308,10 +363,9 @@ export function NERPage() {
             );
         } else {
             console.log("word");
-            return (<span className={classes.chip}>{word}</span>)
+            return (<span key={index} className={classes.chip}>{word}</span>)
         }
     };
-
 
     return pageLoading ? <LayoutSplashScreen /> : (
         <>
@@ -369,6 +423,7 @@ export function NERPage() {
                 </CardBody>
                 <CardBody>
                     <span>You can try it yourself!</span>
+                    <br /><span>*Due to the model size limitation, we can only support the inputs length of <code>60 characters</code>.</span>
                     <ValidatorForm className={classes.validatorForm} onSubmit={() => { }}>
                         <TextValidator
                             required
@@ -384,13 +439,33 @@ export function NERPage() {
                         />
                     </ValidatorForm>
                     <div className="separator separator-dashed my-7" />
-                    <span>
-                        *Due to the model size limitation, we can only support the inputs length of <code>60 characters</code>.
-                    </span>
+                    <Typography variant="button" display="block" gutterBottom>
+                        Available Examples:
+                    </Typography>
+                    <Paper className={classes.paper}>
+                        <MenuList>
+                            <MenuItem onClick={() => { setInputs({ ...inputs, text: "สถานที่ที่คุณสมชายชอบไปคือเกาหลีใต้" }) }}>
+                                <SendIcon fontSize="small" />
+                                <Typography style={{ marginLeft: 10 }} variant="inherit">สถานที่ที่คุณสมชายชอบไปคือเกาหลีใต้</Typography>
+                            </MenuItem>
+                            <MenuItem onClick={() => { setInputs({ ...inputs, text: "อาหารกล่องที่ไทยราคาเพียง 20 บาท" }) }}>
+                                <SendIcon fontSize="small" />
+                                <Typography style={{ marginLeft: 10 }} variant="inherit">อาหารกล่องที่ไทยราคาเพียง 20 บาท</Typography>
+                            </MenuItem>
+                            <MenuItem onClick={() => { setInputs({ ...inputs, text: "เราจะไปเดินเล่นที่หนองคาย และนั่งเรือข้ามไปประเทศลาว" }) }}>
+                                <SendIcon fontSize="small" />
+                                <Typography style={{ marginLeft: 10 }} variant="inherit">เราจะไปเดินเล่นที่หนองคาย และนั่งเรือข้ามไปประเทศลาว</Typography>
+                            </MenuItem>
+                        </MenuList>
+                    </Paper>
                 </CardBody>
             </Card>
 
             <div className="col text-center">
+                <Typography variant="body1" gutterBottom>
+                    You might be able to see the loading spinner when you are submitting
+                    <span>{" "}</span><span role="img" aria-label="sad">😢</span>
+                </Typography>
                 <button
                     id="submit"
                     type="submit"
@@ -398,8 +473,8 @@ export function NERPage() {
                     onClick={handleSubmit}
                     className={`btn btn-primary font-weight-bold px-9 py-4 my-3`}
                 >
-                    <span>Analyse</span>
-                    {loading && <span className="ml-3 spinner spinner-white"></span>}
+                    <span key="button">Analyse</span>
+                    {loading && <span key="spinner" className="ml-3 spinner spinner-white"></span>}
                 </button>
             </div>
 

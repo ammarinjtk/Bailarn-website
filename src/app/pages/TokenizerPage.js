@@ -15,6 +15,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
+import Typography from '@material-ui/core/Typography';
+import SendIcon from '@material-ui/icons/Send';
 
 import { LayoutSplashScreen } from "../../_metronic/layout";
 import { Notice } from "../../_metronic/_partials/controls";
@@ -57,7 +62,13 @@ const useStyles = makeStyles(theme => ({
     },
     chip: {
         margin: theme.spacing(0.5),
-    }
+    },
+    button: {
+        margin: theme.spacing(1),
+    },
+    paper: {
+        margin: theme.spacing(1),
+    },
 }));
 
 export function TokenizerPage() {
@@ -118,7 +129,6 @@ export function TokenizerPage() {
         setInputs({ ...inputs, [name]: event.target.value });
     };
 
-
     const loadCharIndex = () => {
         const char2idx = build_tag_index(CHARACTER_LIST, CHAR_START_INDEX);
         setCharIndex(char2idx);
@@ -173,30 +183,59 @@ export function TokenizerPage() {
             // casting
             x = tf.tensor2d(x);
 
-            let tokenizer_outputs = tokenizer.predict(x);
+            if (!tokenizer) {
+                loadTokenizerModel(() => {
+                    let tokenizer_outputs = tokenizer.predict(x);
 
-            let y_pred = tokenizer_outputs.argMax(2);
-            y_pred = y_pred.flatten();
+                    let y_pred = tokenizer_outputs.argMax(2);
+                    y_pred = y_pred.flatten();
 
-            let all_result = [];
-            for (let sample_idx = 0; sample_idx < readable_x[0].length; sample_idx++) {
-                let label = y_pred.get([sample_idx]);
-                let char = readable_x[0][sample_idx];
-                // Pad label
-                if (label === PAD_TAG_INDEX) continue;
-                // Pad char
-                if (char === READABLE_PAD_CHAR) continue;
-                all_result.push(char);
-                // Skip tag for spacebar character
-                if (char === SPACEBAR) continue;
-                // Tag at segmented point
-                if (label !== NON_SEGMENT_TAG_INDEX) {
-                    all_result.push("|");
+                    let all_result = [];
+                    for (let sample_idx = 0; sample_idx < readable_x[0].length; sample_idx++) {
+                        let label = y_pred.get([sample_idx]);
+                        let char = readable_x[0][sample_idx];
+                        // Pad label
+                        if (label === PAD_TAG_INDEX) continue;
+                        // Pad char
+                        if (char === READABLE_PAD_CHAR) continue;
+                        all_result.push(char);
+                        // Skip tag for spacebar character
+                        if (char === SPACEBAR) continue;
+                        // Tag at segmented point
+                        if (label !== NON_SEGMENT_TAG_INDEX) {
+                            all_result.push("|");
+                        }
+                    }
+                    const results = all_result.join("").split("|").filter(function (el) { return el !== "" });
+                    console.log("Tokenizer outputs: ", results);
+                    resolve(results);
+                });
+            } else {
+                let tokenizer_outputs = tokenizer.predict(x);
+
+                let y_pred = tokenizer_outputs.argMax(2);
+                y_pred = y_pred.flatten();
+
+                let all_result = [];
+                for (let sample_idx = 0; sample_idx < readable_x[0].length; sample_idx++) {
+                    let label = y_pred.get([sample_idx]);
+                    let char = readable_x[0][sample_idx];
+                    // Pad label
+                    if (label === PAD_TAG_INDEX) continue;
+                    // Pad char
+                    if (char === READABLE_PAD_CHAR) continue;
+                    all_result.push(char);
+                    // Skip tag for spacebar character
+                    if (char === SPACEBAR) continue;
+                    // Tag at segmented point
+                    if (label !== NON_SEGMENT_TAG_INDEX) {
+                        all_result.push("|");
+                    }
                 }
-            }
-            const results = all_result.join("").split("|").filter(function (el) { return el !== "" });
-            console.log("Tokenizer outputs: ", results);
-            resolve(results);
+                const results = all_result.join("").split("|").filter(function (el) { return el !== "" });
+                console.log("Tokenizer outputs: ", results);
+                resolve(results);
+            };
         });
     };
 
@@ -255,6 +294,7 @@ export function TokenizerPage() {
                 </CardBody>
                 <CardBody>
                     <span>You can try it yourself!</span>
+                    <br /><span>*Due to the model size limitation, we can only support the inputs length of <code>60 characters</code>.</span>
                     <ValidatorForm className={classes.validatorForm} onSubmit={() => { }}>
                         <TextValidator
                             required
@@ -270,13 +310,33 @@ export function TokenizerPage() {
                         />
                     </ValidatorForm>
                     <div className="separator separator-dashed my-7" />
-                    <span>
-                        *Due to the model size limitation, we can only support the inputs length of <code>60 characters</code>.
-                    </span>
+                    <Typography variant="button" display="block" gutterBottom>
+                        Available Examples:
+                    </Typography>
+                    <Paper className={classes.paper}>
+                        <MenuList>
+                            <MenuItem onClick={() => { setInputs({ ...inputs, text: "สวัสดีตอนเช้า เป็นยังไงบ้างครับ" }) }}>
+                                <SendIcon fontSize="small" />
+                                <Typography style={{ marginLeft: 10 }} variant="inherit">สวัสดีตอนเช้า เป็นยังไงบ้างครับ</Typography>
+                            </MenuItem>
+                            <MenuItem onClick={() => { setInputs({ ...inputs, text: "ฉันอยากรู้จักเธอ" }) }}>
+                                <SendIcon fontSize="small" />
+                                <Typography style={{ marginLeft: 10 }} variant="inherit">ฉันอยากรู้จักเธอ</Typography>
+                            </MenuItem>
+                            <MenuItem onClick={() => { setInputs({ ...inputs, text: "นายกฯ เดินหน้าแก้ปัญหาน้ำยั่งยืน" }) }}>
+                                <SendIcon fontSize="small" />
+                                <Typography style={{ marginLeft: 10 }} variant="inherit">นายกฯ เดินหน้าแก้ปัญหาน้ำยั่งยืน</Typography>
+                            </MenuItem>
+                        </MenuList>
+                    </Paper>
                 </CardBody>
             </Card>
 
             <div className="col text-center">
+                <Typography variant="body1" gutterBottom>
+                    You might be able to see the loading spinner when you are submitting
+                    <span>{" "}</span><span role="img" aria-label="sad">😢</span>
+                </Typography>
                 <button
                     id="submit"
                     type="submit"

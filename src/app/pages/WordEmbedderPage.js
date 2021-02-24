@@ -7,13 +7,16 @@ import { withStyles, makeStyles } from '@material-ui/core/styles';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
-import Icon from '@material-ui/core/Icon';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
+import Typography from '@material-ui/core/Typography';
+import SendIcon from '@material-ui/icons/Send';
 
 import { LayoutSplashScreen } from "../../_metronic/layout";
 import { Notice } from "../../_metronic/_partials/controls";
@@ -32,13 +35,9 @@ const useStyles = makeStyles(theme => ({
         overflow: 'auto',
         maxHeight: 600,
     },
-    textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-    },
     textValidator: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
+        margin: theme.spacing(1),
+        width: 150
     },
     validatorForm: {
         marginLeft: theme.spacing(1),
@@ -63,7 +62,10 @@ const useStyles = makeStyles(theme => ({
     },
     rightIcon: {
         marginLeft: theme.spacing(1),
-    }
+    },
+    paper: {
+        margin: theme.spacing(1),
+    },
 }));
 
 export function WordEmbedderPage() {
@@ -138,7 +140,6 @@ export function WordEmbedderPage() {
         setInputs({ ...inputs, [name]: event.target.value });
     };
 
-
     const loadWordIndex = () => {
         fetch(
             "https://raw.githubusercontent.com/ammarinjtk/Bailarn-website/master/src/app/modules/NLP/models/word_embedder/word_embedder_word_index.json"
@@ -178,43 +179,85 @@ export function WordEmbedderPage() {
             let dist_list = [];
             let dist = {};
 
-            for (let i = 0; i < tokens.length; i++) {
-                for (let j = i + 1; j < tokens.length; j++) {
-                    let in_arr1 = wordIndex[tokens[i]];
-                    let in_arr2 = wordIndex[tokens[j]];
+            if (!wordEmbedder) {
+                loadWordEmbedderModel(() => {
+                    for (let i = 0; i < tokens.length; i++) {
+                        for (let j = i + 1; j < tokens.length; j++) {
+                            let in_arr1 = wordIndex[tokens[i]];
+                            let in_arr2 = wordIndex[tokens[j]];
 
-                    in_arr1 = tf.tensor1d([in_arr1]);
-                    in_arr2 = tf.tensor1d([in_arr2]);
+                            in_arr1 = tf.tensor1d([in_arr1]);
+                            in_arr2 = tf.tensor1d([in_arr2]);
 
-                    let d = wordEmbedder.predict([in_arr1, in_arr2]).dataSync();
+                            let d = wordEmbedder.predict([in_arr1, in_arr2]).dataSync();
 
-                    let word_pair = [tokens[i], tokens[j]];
-                    dist[word_pair] = d;
-                }
-            };
+                            let word_pair = [tokens[i], tokens[j]];
+                            dist[word_pair] = d;
+                        }
+                    };
 
-            // Create items array
-            let sorted_dist = Object.keys(dist).map(function (key) {
-                return [key, dist[key]];
-            });
+                    // Create items array
+                    let sorted_dist = Object.keys(dist).map(function (key) {
+                        return [key, dist[key]];
+                    });
 
-            // Sort the array based on the second element
-            sorted_dist.sort(function (first, second) {
-                return second[1] - first[1];
-            });
+                    // Sort the array based on the second element
+                    sorted_dist.sort(function (first, second) {
+                        return second[1] - first[1];
+                    });
 
-            for (let i = 0; i < sorted_dist.length; i++) {
-                let word_list = sorted_dist[i][0].split(",");
-                let d = sorted_dist[i][1];
+                    for (let i = 0; i < sorted_dist.length; i++) {
+                        let word_list = sorted_dist[i][0].split(",");
+                        let d = sorted_dist[i][1];
 
-                dist_list.push({
-                    w1: word_list[0],
-                    w2: word_list[1],
-                    distance: parseFloat(d).toFixed(4)
+                        dist_list.push({
+                            w1: word_list[0],
+                            w2: word_list[1],
+                            distance: parseFloat(d).toFixed(4)
+                        });
+                    };
+
+                    resolve(dist_list);
                 });
-            };
+            } else {
+                for (let i = 0; i < tokens.length; i++) {
+                    for (let j = i + 1; j < tokens.length; j++) {
+                        let in_arr1 = wordIndex[tokens[i]];
+                        let in_arr2 = wordIndex[tokens[j]];
 
-            resolve(dist_list);
+                        in_arr1 = tf.tensor1d([in_arr1]);
+                        in_arr2 = tf.tensor1d([in_arr2]);
+
+                        let d = wordEmbedder.predict([in_arr1, in_arr2]).dataSync();
+
+                        let word_pair = [tokens[i], tokens[j]];
+                        dist[word_pair] = d;
+                    }
+                };
+
+                // Create items array
+                let sorted_dist = Object.keys(dist).map(function (key) {
+                    return [key, dist[key]];
+                });
+
+                // Sort the array based on the second element
+                sorted_dist.sort(function (first, second) {
+                    return second[1] - first[1];
+                });
+
+                for (let i = 0; i < sorted_dist.length; i++) {
+                    let word_list = sorted_dist[i][0].split(",");
+                    let d = sorted_dist[i][1];
+
+                    dist_list.push({
+                        w1: word_list[0],
+                        w2: word_list[1],
+                        distance: parseFloat(d).toFixed(4)
+                    });
+                };
+
+                resolve(dist_list);
+            };
         });
     };
 
@@ -256,7 +299,6 @@ export function WordEmbedderPage() {
                                 onChange={handleChange("firstWord")}
                                 value={inputs.firstWord}
                                 className={classes.textValidator}
-                                style={{ width: 65, marginRight: 5 }}
                                 variant="outlined"
                             />
                             <TextValidator
@@ -265,7 +307,6 @@ export function WordEmbedderPage() {
                                 onChange={handleChange("secondWord")}
                                 value={inputs.secondWord}
                                 className={classes.textValidator}
-                                style={{ width: 65, marginRight: 5 }}
                                 variant="outlined"
                             />
                             <TextValidator
@@ -274,16 +315,44 @@ export function WordEmbedderPage() {
                                 onChange={handleChange("thirdWord")}
                                 value={inputs.thirdWord}
                                 className={classes.textValidator}
-                                style={{ width: 65, marginRight: 5 }}
                                 variant="outlined"
                             />
                         </ListItem>
                     </ValidatorForm>
                     <div className="separator separator-dashed my-7" />
+                    <Typography variant="button" display="block" gutterBottom>
+                        Available Examples:
+                    </Typography>
+                    <Paper className={classes.paper}>
+                        <MenuList>
+                            <MenuItem onClick={() => {
+                                setInputs({ firstWord: "แม่", secondWord: "พ่อ", thirdWord: "เพื่อนบ้าน" })
+                            }}>
+                                <SendIcon fontSize="small" />
+                                <Typography style={{ marginLeft: 10 }} variant="inherit">แม่ | พ่อ | เพื่อนบ้าน</Typography>
+                            </MenuItem>
+                            <MenuItem onClick={() => {
+                                setInputs({ firstWord: "วันเสาร์", secondWord: "วันอังคาร", thirdWord: "ดวงจันทร์" })
+                            }}>
+                                <SendIcon fontSize="small" />
+                                <Typography style={{ marginLeft: 10 }} variant="inherit">วันเสาร์ | วันอังคาร | ดวงจันทร์</Typography>
+                            </MenuItem>
+                            <MenuItem onClick={() => {
+                                setInputs({ firstWord: "กิน", secondWord: "เก้าอี้", thirdWord: "รับประทาน" })
+                            }}>
+                                <SendIcon fontSize="small" />
+                                <Typography style={{ marginLeft: 10 }} variant="inherit">กิน | เก้าอี้ | รับประทาน</Typography>
+                            </MenuItem>
+                        </MenuList>
+                    </Paper>
                 </CardBody>
             </Card>
 
             <div className="col text-center">
+                <Typography variant="body1" gutterBottom>
+                    You might be able to see the loading spinner when you are submitting
+                    <span>{" "}</span><span role="img" aria-label="sad">😢</span>
+                </Typography>
                 <button
                     id="submit"
                     type="submit"
@@ -339,7 +408,6 @@ export function WordEmbedderPage() {
                             href="http://projector.tensorflow.org/?config=https://gist.githubusercontent.com/ammarinjtk/7c393efd36b7549f98f2ac8e4898ad69/raw/9db47703cdd1137a9094f975bcc4008d7318848f/config.json"
                         >
                             Embedding Projector
-                            <Icon className={classes.rightIcon}>send</Icon>
                         </Button>
                     </CardBody>
                 </Card>
