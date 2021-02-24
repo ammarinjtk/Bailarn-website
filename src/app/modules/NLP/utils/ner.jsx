@@ -97,4 +97,47 @@ export const TAG_DESCRIPTIONS = {
 };
 
 
+export const TAG_ABBR = {
+    X: null,
+    DTM_B: "Date/Time",
+    DTM_I: "Date/Time",
+    DES_B: "Designation",
+    DES_I: "Designation",
+    TTL_B: "Title",
+    TTL_I: "Title",
+    BRN_B: "Brand",
+    BRN_I: "Brand",
+    PER_B: "Person name",
+    PER_I: "Person name",
+    MEA_B: "Measurement",
+    MEA_I: "Measurement",
+    NUM_B: "Number",
+    NUM_I: "Number",
+    LOC_B: "Location",
+    LOC_I: "Location",
+    TRM_B: "Terminology",
+    TRM_I: "Terminology",
+    ORG_B: "Organization",
+    ORG_I: "Organization",
+    ABB_ORG_B: "Abbr. of Organization",
+    ABB_ORG_I: "Abbr. of Organization",
+    ABB_LOC_B: "Abbr. of Location",
+    ABB_LOC_I: "Abbr. of Location",
+    ABB_DES_B: "Abbr. of Designation",
+    ABB_DES_I: "Abbr. of Designation",
+    ABB_PER_B: "Abbr. of Person name",
+    ABB_PER_I: "Abbr. of Person name",
+    ABB_TTL_B: "Abbr. of Title",
+    ABB_TTL_I: "Abbr. of Title",
+    ABB_B: "Abbreviation",
+    ABB_I: "Abbreviation",
+    ABB: null,
+    DDEM: null,
+    NAME_B: null,
+    __: null,
+    O: null,
+    UNK: null,
+};
+
+
 export const NUM_TAGS = TAG_LIST.length;

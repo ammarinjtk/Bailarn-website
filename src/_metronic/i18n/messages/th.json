@@ -1,5 +1,6 @@
 {
   "TRANSLATOR.SELECT": "เลือกภาษา",
+  "USER.GREETING": "สวัสดีคุณ",
   "MENU.NEW": "new",
   "MENU.ACTIONS": "Actions",
   "MENU.CREATE_POST": "Create New Post",

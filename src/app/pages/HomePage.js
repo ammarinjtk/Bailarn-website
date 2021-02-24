@@ -16,6 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import GitHubIcon from '@material-ui/icons/GitHub';
+import EmailIcon from '@material-ui/icons/Email';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -120,6 +121,9 @@ export function HomePage() {
                 <IconButton aria-label="Github" onClick={() => window.open("https://github.com/ammarinjtk/Bailarn-website")}>
                   <GitHubIcon />
                 </IconButton>
+                <IconButton aria-label="Email" onClick={() => window.open("https://mail.google.com/mail/?view=cm&fs=1&to=ammarinjtk@gmail.com")}>
+                  <EmailIcon />
+                </IconButton>
               </CardActions>
             </Grid>
             <Grid item xs={8} style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
@@ -214,9 +218,9 @@ export function HomePage() {
             </div>
 
             <div className="d-flex align-items-center mb-10">
-              <div className="symbol symbol-40 symbol-light-primary mr-5">
+              <div className="symbol symbol-40 symbol-light-secondary mr-5">
                 <span className="symbol-label">
-                  <span className="svg-icon svg-icon-lg svg-icon-primary">
+                  <span className="svg-icon svg-icon-lg svg-icon-secondary">
                     <SVG
                       className="h-75 align-self-end"
                       src={toAbsoluteUrl("/media/svg/icons/Design/Difference.svg")}
@@ -235,9 +239,9 @@ export function HomePage() {
             <div className="separator separator-dashed my-7" />
 
             <div className="d-flex align-items-center mb-10">
-              <div className="symbol symbol-40 symbol-light-primary mr-5">
+              <div className="symbol symbol-40 symbol-light-secondary mr-5">
                 <span className="symbol-label">
-                  <span className="svg-icon svg-icon-lg svg-icon-primary">
+                  <span className="svg-icon svg-icon-lg svg-icon-secondary">
                     <SVG
                       className="h-75 align-self-end"
                       src={toAbsoluteUrl("/media/svg/icons/Files/User-folder.svg")}
@@ -254,9 +258,9 @@ export function HomePage() {
             </div>
 
             <div className="d-flex align-items-center mb-10">
-              <div className="symbol symbol-40 symbol-light-primary mr-5">
+              <div className="symbol symbol-40 symbol-light-secondary mr-5">
                 <span className="symbol-label">
-                  <span className="svg-icon svg-icon-lg svg-icon-primary">
+                  <span className="svg-icon svg-icon-lg svg-icon-secondary">
                     <SVG
                       className="h-75 align-self-end"
                       src={toAbsoluteUrl("/media/svg/icons/Design/Pen-tool-vector.svg")}

@@ -1,13 +1,14 @@
 /* eslint-disable no-restricted-imports */
 /* eslint-disable no-script-url,jsx-a11y/anchor-is-valid */
-import React, {useMemo} from "react";
-import {OverlayTrigger, Tooltip} from "react-bootstrap";
-import {useSelector} from "react-redux";
+import React, { useMemo } from "react";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import objectPath from "object-path";
-import {useHtmlClassService} from "../../_core/MetronicLayout";
+import { useHtmlClassService } from "../../_core/MetronicLayout";
+import { FormattedMessage } from "react-intl";
 
 export function QuickUserToggler() {
-  const {user} = useSelector(state => state.auth);
+  const { user } = useSelector(state => state.auth);
   const uiService = useHtmlClassService();
   const layoutProps = useMemo(() => {
     return {
@@ -16,26 +17,26 @@ export function QuickUserToggler() {
   }, [uiService]);
 
   return (<>
-        {layoutProps.offcanvas && (<OverlayTrigger
-            placement="bottom"
-            overlay={<Tooltip id="quick-user-tooltip">View user</Tooltip>}
-        >
-          <div className="topbar-item">
-            <div className="btn btn-icon w-auto btn-clean d-flex align-items-center btn-lg px-2"
-                 id="kt_quick_user_toggle">
-              <>
+    {layoutProps.offcanvas && (<OverlayTrigger
+      placement="bottom"
+      overlay={<Tooltip id="quick-user-tooltip">View user</Tooltip>}
+    >
+      <div className="topbar-item">
+        <div className="btn btn-icon w-auto btn-clean d-flex align-items-center btn-lg px-2"
+          id="kt_quick_user_toggle">
+          <>
 
-                <span className="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
-                <span className="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">
-                  {user.fullname}
-                </span>
-                <span className="symbol symbol-35 symbol-light-success">                
-                    <img src={user.imageUrl} alt=""/>
-                </span>
-              </>
-            </div>
-          </div>
-        </OverlayTrigger>)}
-      </>
+            <span className="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1"><FormattedMessage id="USER.GREETING" /></span>
+            <span className="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">
+              {user.fullname}
+            </span>
+            <span className="symbol symbol-35 symbol-light-success">
+              <img src={user.imageUrl} alt="" />
+            </span>
+          </>
+        </div>
+      </div>
+    </OverlayTrigger>)}
+  </>
   );
 }

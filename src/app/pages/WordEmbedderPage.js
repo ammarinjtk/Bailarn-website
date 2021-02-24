@@ -350,7 +350,7 @@ export function WordEmbedderPage() {
 
             <div className="col text-center">
                 <Typography variant="body1" gutterBottom>
-                    You might be able to see the loading spinner when you are submitting
+                    You might be able to see the loading spinner when you are submitting, please wait
                     <span>{" "}</span><span role="img" aria-label="sad">😢</span>
                 </Typography>
                 <button

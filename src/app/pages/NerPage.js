@@ -37,7 +37,8 @@ import {
 import {
     TAG_LIST,
     SEQUENCE_LENGTH as NER_SEQUENCE_LENGTH,
-    TAG_DESCRIPTIONS
+    TAG_DESCRIPTIONS,
+    TAG_ABBR
 } from "../modules/NLP/utils/ner";
 import { pad, build_tag_index, swap } from "../modules/NLP/utils/utils";
 
@@ -356,9 +357,17 @@ export function NERPage() {
         const word = tokens[index];
         const tag_desc = TAG_DESCRIPTIONS[tag];
         if (tag_desc) {
+            const tag_abbr = TAG_ABBR[tag];
+            const label = `${word} [${tag_abbr}]`
             return (
                 <Tooltip key={`tooltip_${index}`} title={<Typography variant="subtitle2">{tag_desc}</Typography>} interactive>
-                    <Chip key={`chip_${index}`} size="medium" color="secondary" label={word} className={classes.chip} variant="outlined" />
+                    <Chip
+                        key={`chip_${index}`}
+                        size="medium"
+                        color="secondary"
+                        label={label}
+                        className={classes.chip}
+                        variant="outlined" />
                 </Tooltip>
             );
         } else {
@@ -463,7 +472,7 @@ export function NERPage() {
 
             <div className="col text-center">
                 <Typography variant="body1" gutterBottom>
-                    You might be able to see the loading spinner when you are submitting
+                    You might be able to see the loading spinner when you are submitting, please wait
                     <span>{" "}</span><span role="img" aria-label="sad">😢</span>
                 </Typography>
                 <button
