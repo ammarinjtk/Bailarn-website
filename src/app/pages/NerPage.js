@@ -482,7 +482,7 @@ export function NERPage() {
                     onClick={handleSubmit}
                     className={`btn btn-primary font-weight-bold px-9 py-4 my-3`}
                 >
-                    <span key="button">Analyse</span>
+                    <span key="button">{loading ? "Loading" : "Analyse"}</span>
                     {loading && <span key="spinner" className="ml-3 spinner spinner-white"></span>}
                 </button>
             </div>
