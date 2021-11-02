@@ -109,4 +109,4 @@ The web application is based on Create React App. For more detailed information 
 
 
 ## Authors
-- **Amarin Jettakul** &mdash; _Initial work_ &mdash; Data Analyst (contact: ammarinjtk@gmail.com)
+- **Amarin Jettakul** &mdash; _Initial work_ &mdash;
