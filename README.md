@@ -108,9 +108,5 @@ The web application is based on Create React App. For more detailed information 
 | **package.json** | A package.json file contains meta data about app or module. Most importantly, it includes the list of dependencies to install from npm when running npm install. |
 
 
-## Authentication
----
-We use Firebase as a authentication service. Users can sign in using their internal emails (@sertiscorp.com) supported by Google. Firebase authentication provides backend services, easy-to-use SDKs, and ready-made UI libraries to authenticate users in web applications. It also supports popular identity providers such as Google, Facebook, Twitter, and more. For more reference, you can see the [official documentation](https://firebase.google.com/docs/auth).
-
 ## Authors
 - **Amarin Jettakul** &mdash; _Initial work_ &mdash; Data Analyst (contact: ammarinjtk@gmail.com)
