@@ -102,7 +102,7 @@ export function HomePage() {
                   </IconButton>
                 }
                 title="Amarin Jettakul"
-                subheader="Data Analyst @ Sertis, Thailand"
+                subheader="Data Analyst @ Line Company, Thailand"
               />
               <CardMedia
                 style={{ marginLeft: 20, marginRight: 20 }}
