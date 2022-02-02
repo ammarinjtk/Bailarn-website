@@ -107,7 +107,7 @@ export function HomePage() {
               <CardMedia
                 style={{ marginLeft: 20, marginRight: 20 }}
                 className={classes.media}
-                image="https://scontent.fbkk12-2.fna.fbcdn.net/v/t1.0-9/154302810_3953385558060166_4003084579645366395_o.jpg?_nc_cat=105&ccb=3&_nc_sid=09cbfe&_nc_eui2=AeHspYbJEz2d1vE_VRjQxuQy8Bl76lGJ3ZHwGXvqUYndkbSaloQ2L7J_FX4pLhgjlzc2cPNOrDFXIUyuUQT5cU4_&_nc_ohc=ABllVZEGFiAAX9nr8n9&_nc_ht=scontent.fbkk12-2.fna&oh=8d868a26212a41065248dd470e663edc&oe=605AF16F"
+                image="https://i.ibb.co/6vfBg1m/IMG-0012.jpg"
               />
               <CardContent>
                 <Typography style={{ marginLeft: 10 }} variant="body2" color="textSecondary" component="p">
