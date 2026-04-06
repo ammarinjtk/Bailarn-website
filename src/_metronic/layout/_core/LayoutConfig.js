@@ -124,7 +124,7 @@ export function getInitLayoutConfig() {
     },
     extras: {
       user: {
-        display: true,
+        display: false,
         layout: "offcanvas",
         dropdown: {
           style: "dark",
