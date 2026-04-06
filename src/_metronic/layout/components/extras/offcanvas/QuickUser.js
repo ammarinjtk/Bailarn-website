@@ -9,6 +9,8 @@ export function QuickUser() {
   const history = useHistory();
   const { user } = useSelector(state => state.auth);
 
+  if (!user) return null;
+
   const logoutClick = () => {
     const toggle = document.getElementById("kt_quick_user_toggle");
     if (toggle) {
