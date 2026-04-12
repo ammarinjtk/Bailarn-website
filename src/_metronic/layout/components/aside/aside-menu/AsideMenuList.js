@@ -77,15 +77,19 @@ export function AsideMenuList({ layoutProps }) {
         </li>
 
         <li
-          className={`menu-item ${getMenuItemActive("#", false)}`}
+          className="menu-item"
           aria-haspopup="true"
+          style={{ opacity: 0.5, pointerEvents: "none" }}
         >
-          <NavLink className="menu-link" to="#">
+          <span className="menu-link">
             <span className="svg-icon menu-icon">
               <SVG src={toAbsoluteUrl("/media/svg/icons/Design/Difference.svg")} />
             </span>
             <span className="menu-text">Part of Speech Tagging</span>
-          </NavLink>
+            <span className="menu-label">
+              <span className="label label-rounded label-light-dark label-inline">Coming Soon</span>
+            </span>
+          </span>
         </li>
         {/*end::1 Level*/}
         {/* end:: section */}
@@ -97,27 +101,35 @@ export function AsideMenuList({ layoutProps }) {
         </li>
 
         <li
-          className={`menu-item ${getMenuItemActive("#", false)}`}
+          className="menu-item"
           aria-haspopup="true"
+          style={{ opacity: 0.5, pointerEvents: "none" }}
         >
-          <NavLink className="menu-link" to="#">
+          <span className="menu-link">
             <span className="svg-icon menu-icon">
               <SVG src={toAbsoluteUrl("/media/svg/icons/Files/User-folder.svg")} />
             </span>
             <span className="menu-text">Sentiment Analysis</span>
-          </NavLink>
+            <span className="menu-label">
+              <span className="label label-rounded label-light-dark label-inline">Coming Soon</span>
+            </span>
+          </span>
         </li>
 
         <li
-          className={`menu-item ${getMenuItemActive("#", false)}`}
+          className="menu-item"
           aria-haspopup="true"
+          style={{ opacity: 0.5, pointerEvents: "none" }}
         >
-          <NavLink className="menu-link" to="#">
+          <span className="menu-link">
             <span className="svg-icon menu-icon">
               <SVG src={toAbsoluteUrl("/media/svg/icons/Design/Pen-tool-vector.svg")} />
             </span>
             <span className="menu-text">Multi-label Text Classification</span>
-          </NavLink>
+            <span className="menu-label">
+              <span className="label label-rounded label-light-dark label-inline">Coming Soon</span>
+            </span>
+          </span>
         </li>
         {/* end:: section */}
       </ul>
