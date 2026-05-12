@@ -49,6 +49,7 @@ const useStyles = makeStyles(theme => ({
     textValidator: {
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
+        width: '100%',
     },
     validatorForm: {
         marginLeft: theme.spacing(1),
@@ -57,7 +58,7 @@ const useStyles = makeStyles(theme => ({
     resultList: {
         width: '100%',
         marginBottom: theme.spacing(1),
-        height: 500,
+        maxHeight: 500,
         backgroundColor: theme.palette.background.paper,
     },
     chip: {
@@ -262,11 +263,11 @@ export function TokenizerPage() {
                     <br /><br />
                     <span>Here is an example of the tokenization:</span>
                     <br /><br />
-                    <div>
-                        <span style={{ marginLeft: 30 }}>Input: สวัสดีตอนเช้า เป็นยังไงบ้างครับ</span>
+                    <div style={{ paddingLeft: 16 }}>
+                        <span>Input: สวัสดีตอนเช้า เป็นยังไงบ้างครับ</span>
                     </div>
-                    <div>
-                        <span style={{ marginLeft: 30 }}>Output: </span>
+                    <div style={{ paddingLeft: 16 }}>
+                        <span>Output: </span>
                         <Chip label="สวัสดี" color="secondary" className={classes.chip} variant="outlined" />
                         <Chip label="ตอน" color="secondary" className={classes.chip} variant="outlined" />
                         <Chip label="เช้า" color="secondary" className={classes.chip} variant="outlined" />

@@ -28,14 +28,14 @@ const useStyles = makeStyles(theme => ({
   paper: {
     padding: theme.spacing(4),
     color: theme.palette.text.secondary,
-    marginRight: theme.spacing(5),
     display: "flex",
     flexDirection: "column",
     justifyContent: "center"
   },
   card: {
-    maxWidth: 345,
-    marginLeft: theme.spacing(10),
+    maxWidth: '100%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
     marginBottom: theme.spacing(3)
   },
   media: {
@@ -89,7 +89,7 @@ export function HomePage() {
 
           {/* Body */}
           <Grid container spacing={3}>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
               <CardHeader
                 avatar={
                   <Avatar aria-label="Recipe" className={classes.avatar}>
@@ -105,12 +105,12 @@ export function HomePage() {
                 subheader="Director of Technology & AI @ Tact AI, Thailand"
               />
               <CardMedia
-                style={{ marginLeft: 20, marginRight: 20 }}
+                style={{ marginLeft: 16, marginRight: 16 }}
                 className={classes.media}
                 image="https://i.ibb.co/6vfBg1m/IMG-0012.jpg"
               />
               <CardContent>
-                <Typography style={{ marginLeft: 10 }} variant="body2" color="textSecondary" component="p">
+                <Typography variant="body2" color="textSecondary" component="p">
                   My name is "Amarin Jettakul" and I was studied both Bachelor and Master degrees in Computer Engineering, Chulalongkorn University, Thailand.
         </Typography>
               </CardContent>
@@ -126,7 +126,7 @@ export function HomePage() {
                 </IconButton>
               </CardActions>
             </Grid>
-            <Grid item xs={8} style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <Grid item xs={12} md={8} style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
               {/* https://github.com/ammarinjtk/Bailarn-python-library */}
               <Paper className={classes.paper}>
                 <span>The project aims to develop Thai NLP library and web interface based on state-of-the-art deep learning techniques. With this project, users or developers will be able to train their NLP models on thier own dataset using the provided model structure and utilities.</span>

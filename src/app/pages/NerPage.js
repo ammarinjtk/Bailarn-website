@@ -52,6 +52,7 @@ const useStyles = makeStyles(theme => ({
     textValidator: {
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
+        width: '100%',
     },
     validatorForm: {
         marginLeft: theme.spacing(1),
@@ -399,36 +400,39 @@ export function NERPage() {
                     <br /><br />
                     <span>For example, in the sentence:</span>
                     <br /><br />
-                    <div>
-                        <span style={{ marginLeft: 30 }}>Input: สถานที่ที่คุณสมชายชอบไปคือเกาหลีใต้</span>
+                    <div style={{ paddingLeft: 16 }}>
+                        <span>Input: สถานที่ที่คุณสมชายชอบไปคือเกาหลีใต้</span>
                     </div>
-                    <div style={{ marginTop: 20 }}>
-                        <span style={{ marginLeft: 30 }}>Output: </span>
-                        <span style={{ marginLeft: 10 }}>{"Title: "}</span><Chip label="คุณ" color="secondary" className={classes.chip} variant="outlined" />
-                        <span style={{ marginLeft: 10 }}>{"Person: "}</span><Chip label="สมชาย" color="secondary" className={classes.chip} variant="outlined" />
-                        <span style={{ marginLeft: 30 }}>{"Organization: "}</span><Chip label="เกาหลีใต้" color="secondary" className={classes.chip} variant="outlined" />
+                    <div style={{ paddingLeft: 16, marginTop: 16 }}>
+                        <span>Output: </span>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 8, marginTop: 8 }}>
+                            <span style={{ display: 'inline-flex', alignItems: 'center' }}>{"Title: "}<Chip label="คุณ" color="secondary" className={classes.chip} variant="outlined" /></span>
+                            <span style={{ display: 'inline-flex', alignItems: 'center' }}>{"Person: "}<Chip label="สมชาย" color="secondary" className={classes.chip} variant="outlined" /></span>
+                            <span style={{ display: 'inline-flex', alignItems: 'center' }}>{"Organization: "}<Chip label="เกาหลีใต้" color="secondary" className={classes.chip} variant="outlined" /></span>
+                        </div>
                     </div>
                     <br />
                     <span>NER plays a key role by identifying and classifying entities in a text. It is the first step in enabling machines to understand what seems to be an unstructured sequence of words. Nevertheless, it is still a long journey to understand a text like a human. One becomes particularly aware of this when going into detail: As we found out NER understands “สมชาย” as a person. However, NER can’t differentiate between all the people called “สมชาย”.</span>
                     <br /><br />
                     <span>*The available tags are:</span>
-                    <span>{" "}</span>
-                    <br /><Chip style={{ marginLeft: 30, marginTop: 10 }} label="Date/Time" className={classes.chip} variant="outlined" />
-                    <br /><Chip style={{ marginLeft: 30, marginTop: 10 }} label="Designation" className={classes.chip} variant="outlined" />
-                    <br /><Chip style={{ marginLeft: 30, marginTop: 10 }} label="Title" className={classes.chip} variant="outlined" />
-                    <br /><Chip style={{ marginLeft: 30, marginTop: 10 }} label="Brand" className={classes.chip} variant="outlined" />
-                    <br /><Chip style={{ marginLeft: 30, marginTop: 10 }} label="Person name" className={classes.chip} variant="outlined" />
-                    <br /><Chip style={{ marginLeft: 30, marginTop: 10 }} label="Measurement" className={classes.chip} variant="outlined" />
-                    <br /><Chip style={{ marginLeft: 30, marginTop: 10 }} label="Number" className={classes.chip} variant="outlined" />
-                    <br /><Chip style={{ marginLeft: 30, marginTop: 10 }} label="Location" className={classes.chip} variant="outlined" />
-                    <br /><Chip style={{ marginLeft: 30, marginTop: 10 }} label="Terminology" className={classes.chip} variant="outlined" />
-                    <br /><Chip style={{ marginLeft: 30, marginTop: 10 }} label="Organization" className={classes.chip} variant="outlined" />
-                    <br /><Chip style={{ marginLeft: 30, marginTop: 10 }} label="Abbreviation of Organization" className={classes.chip} variant="outlined" />
-                    <br /><Chip style={{ marginLeft: 30, marginTop: 10 }} label="Abbreviation of Location" className={classes.chip} variant="outlined" />
-                    <br /><Chip style={{ marginLeft: 30, marginTop: 10 }} label="Abbreviation of Designation" className={classes.chip} variant="outlined" />
-                    <br /><Chip style={{ marginLeft: 30, marginTop: 10 }} label="Abbreviation of Person name" className={classes.chip} variant="outlined" />
-                    <br /><Chip style={{ marginLeft: 30, marginTop: 10 }} label="Abbreviation of Title" className={classes.chip} variant="outlined" />
-                    <br /><Chip style={{ marginLeft: 30, marginTop: 10 }} label="Abbreviation" className={classes.chip} variant="outlined" />
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 8, paddingLeft: 16 }}>
+                        <Chip label="Date/Time" className={classes.chip} variant="outlined" />
+                        <Chip label="Designation" className={classes.chip} variant="outlined" />
+                        <Chip label="Title" className={classes.chip} variant="outlined" />
+                        <Chip label="Brand" className={classes.chip} variant="outlined" />
+                        <Chip label="Person name" className={classes.chip} variant="outlined" />
+                        <Chip label="Measurement" className={classes.chip} variant="outlined" />
+                        <Chip label="Number" className={classes.chip} variant="outlined" />
+                        <Chip label="Location" className={classes.chip} variant="outlined" />
+                        <Chip label="Terminology" className={classes.chip} variant="outlined" />
+                        <Chip label="Organization" className={classes.chip} variant="outlined" />
+                        <Chip label="Abbreviation of Organization" className={classes.chip} variant="outlined" />
+                        <Chip label="Abbreviation of Location" className={classes.chip} variant="outlined" />
+                        <Chip label="Abbreviation of Designation" className={classes.chip} variant="outlined" />
+                        <Chip label="Abbreviation of Person name" className={classes.chip} variant="outlined" />
+                        <Chip label="Abbreviation of Title" className={classes.chip} variant="outlined" />
+                        <Chip label="Abbreviation" className={classes.chip} variant="outlined" />
+                    </div>
                 </CardBody>
                 <CardBody>
                     <span>You can try it yourself!</span>

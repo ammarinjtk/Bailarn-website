@@ -5,6 +5,12 @@
 // Theme Styles
 @import "./_metronic/_assets/sass/style.react.scss";
 
+// Prevent horizontal scrolling on mobile
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
 // Default Layout themes
 @import "./_metronic/_assets/sass/themes/layout/header/base/light.scss";
 @import "./_metronic/_assets/sass/themes/layout/header/menu/light.scss";

@@ -37,7 +37,8 @@ const useStyles = makeStyles(theme => ({
     },
     textValidator: {
         margin: theme.spacing(1),
-        width: 150
+        minWidth: 120,
+        flex: '1 1 120px',
     },
     validatorForm: {
         marginLeft: theme.spacing(1),
@@ -46,7 +47,7 @@ const useStyles = makeStyles(theme => ({
     resultList: {
         width: '100%',
         marginBottom: theme.spacing(1),
-        height: 500,
+        maxHeight: 500,
         backgroundColor: theme.palette.background.paper,
     },
     tableRoot: {
@@ -55,7 +56,7 @@ const useStyles = makeStyles(theme => ({
         overflowX: 'auto',
     },
     table: {
-        minWidth: 650,
+        minWidth: 0,
     },
     button: {
         margin: theme.spacing(1),
