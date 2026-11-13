@@ -129,6 +129,7 @@ export function HomePage() {
             <Grid item xs={12} md={8} style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
               {/* https://github.com/ammarinjtk/Bailarn-python-library */}
               <Paper className={classes.paper}>
+                <img src={toAbsoluteUrl("/illustrations/ai-reading-bedtime-story.svg")} alt="" aria-hidden="true" width={280} height={280} loading="lazy" style={{ alignSelf: "center", maxWidth: "100%", height: "auto", aspectRatio: "1 / 1", marginBottom: 16 }} />
                 <span>The project aims to develop Thai NLP library and web interface based on state-of-the-art deep learning techniques. With this project, users or developers will be able to train their NLP models on thier own dataset using the provided model structure and utilities.</span>
                 <br /><br />
                 <span>Thai NLP libraries also provide the pre-trained NLP models to process the sentences instancely. All pre-trained models were evaluated and compared across other deep learning methods proposed in the previous researches.</span>
@@ -153,6 +154,7 @@ export function HomePage() {
           {/* Header */}
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
+              <img src={toAbsoluteUrl("/illustrations/communication-chat-bubbles.svg")} alt="" aria-hidden="true" width={40} height={40} loading="lazy" className="mr-3" />
               Features Overview
                 </h3>
           </div>
@@ -218,15 +220,8 @@ export function HomePage() {
             </div>
 
             <div className="d-flex align-items-center mb-10">
-              <div className="symbol symbol-40 symbol-light-secondary mr-5">
-                <span className="symbol-label">
-                  <span className="svg-icon svg-icon-lg svg-icon-secondary">
-                    <SVG
-                      className="h-75 align-self-end"
-                      src={toAbsoluteUrl("/media/svg/icons/Design/Difference.svg")}
-                    ></SVG>
-                  </span>
-                </span>
+              <div className="mr-5">
+                <img src={toAbsoluteUrl("/illustrations/roadblock-barrier-construction-warning.svg")} alt="" aria-hidden="true" width={40} height={40} loading="lazy" />
               </div>
               <div className="d-flex flex-column font-weight-bold">
                 <NavLink className="menu-link" to="#">
@@ -239,15 +234,8 @@ export function HomePage() {
             <div className="separator separator-dashed my-7" />
 
             <div className="d-flex align-items-center mb-10">
-              <div className="symbol symbol-40 symbol-light-secondary mr-5">
-                <span className="symbol-label">
-                  <span className="svg-icon svg-icon-lg svg-icon-secondary">
-                    <SVG
-                      className="h-75 align-self-end"
-                      src={toAbsoluteUrl("/media/svg/icons/Files/User-folder.svg")}
-                    ></SVG>
-                  </span>
-                </span>
+              <div className="mr-5">
+                <img src={toAbsoluteUrl("/illustrations/roadblock-barrier-construction-warning.svg")} alt="" aria-hidden="true" width={40} height={40} loading="lazy" />
               </div>
               <div className="d-flex flex-column font-weight-bold">
                 <NavLink className="menu-link" to="#">
@@ -258,15 +246,8 @@ export function HomePage() {
             </div>
 
             <div className="d-flex align-items-center mb-10">
-              <div className="symbol symbol-40 symbol-light-secondary mr-5">
-                <span className="symbol-label">
-                  <span className="svg-icon svg-icon-lg svg-icon-secondary">
-                    <SVG
-                      className="h-75 align-self-end"
-                      src={toAbsoluteUrl("/media/svg/icons/Design/Pen-tool-vector.svg")}
-                    ></SVG>
-                  </span>
-                </span>
+              <div className="mr-5">
+                <img src={toAbsoluteUrl("/illustrations/roadblock-barrier-construction-warning.svg")} alt="" aria-hidden="true" width={40} height={40} loading="lazy" />
               </div>
               <div className="d-flex flex-column font-weight-bold">
                 <NavLink className="menu-link" to="#">
