@@ -1,5 +1,8 @@
 import { notFound } from 'next/navigation'
 import { TASKS } from '@/lib/tasks'
+import TokenizeDemo from '@/components/demos/tokenize-demo'
+
+const DEMOS: Record<string, React.ComponentType> = { tokenize: TokenizeDemo }
 
 export const dynamicParams = false
 
@@ -30,8 +33,11 @@ export default async function TaskPage({ params }: { params: Promise<{ slug: str
           {task.score ? <>BEST2010 test set: {task.score}</> : <>No published test score</>}
         </p>
       </header>
-      {/* The demo itself is built in the next step. */}
-      <section className="border border-dashed border-rule rounded-sm bg-sheet p-8 text-mute">Demo goes here.</section>
+      {DEMOS[task.slug] ? (
+        <section aria-label="Try it" className="border border-rule rounded-sm bg-sheet p-5 sm:p-6">{(() => { const Demo = DEMOS[task.slug]; return <Demo /> })()}</section>
+      ) : (
+        <section className="border border-dashed border-rule rounded-sm bg-sheet p-8 text-mute">Demo goes here.</section>
+      )}
     </div>
   )
 }

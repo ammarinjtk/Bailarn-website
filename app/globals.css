@@ -14,6 +14,7 @@
   --green: #2e7d32;
   --blue: #2f5bd3;
   --tint: #e3f1e3;
+  --danger: #b3261e;
 }
 
 [data-theme='dark'] {
@@ -27,6 +28,7 @@
   --green: #7fcf83;
   --blue: #8aa6ff;
   --tint: #1f2e22;
+  --danger: #f2b8b5;
   color-scheme: dark;
 }
 
@@ -41,6 +43,7 @@
   --color-green: var(--green);
   --color-blue: var(--blue);
   --color-tint: var(--tint);
+  --color-danger: var(--danger);
   --font-display: var(--font-serif-thai), Georgia, serif;
   --font-sans: var(--font-sarabun), system-ui, sans-serif;
   --font-mono: var(--font-dm-mono), ui-monospace, monospace;

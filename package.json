@@ -4,10 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "models": "node scripts/build-models.mjs",
+    "prebuild": "node scripts/build-models.mjs",
     "build": "next build",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "node --test --experimental-strip-types --no-warnings tests/*.test.ts"
   },
   "dependencies": {
+    "@tensorflow/tfjs": "4.22.0",
     "next": "15.5.29",
     "react": "19.0.9",
     "react-dom": "19.0.9"

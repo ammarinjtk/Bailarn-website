@@ -9,6 +9,8 @@
 /build
 /.next
 /out
+/public/models
+lib/nlp/model-sizes.json
 next-env.d.ts
 *.tsbuildinfo
 

@@ -4,5 +4,8 @@ out
 build
 .git
 .claude
-models
+models/keyword_expansion
+public/models
+lib/nlp/model-sizes.json
+tests
 *.md
