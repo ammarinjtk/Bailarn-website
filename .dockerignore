@@ -1,9 +1,8 @@
 node_modules
+.next
+out
 build
 .git
-.github
+.claude
+models
 *.md
-.eslintrc*
-.prettier*
-webpack.config.js
-serve.json

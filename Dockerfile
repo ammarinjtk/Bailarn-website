@@ -1,29 +1,15 @@
-# ── Stage 1: Build ───────────────────────────────────────────────────
-# NODE_OPTIONS=--openssl-legacy-provider required because react-scripts@3.2.0
-# uses webpack 4 which relies on MD4 hashing — not supported in OpenSSL 3 (Node 17+)
+# Stage 1: build the static export into out/
 FROM node:20-alpine AS builder
-
 WORKDIR /app
-
-# Install dependencies
 COPY package.json package-lock.json ./
-RUN npm ci --legacy-peer-deps
-
-# Copy source and build
+RUN npm ci
 COPY . .
-ENV NODE_OPTIONS=--openssl-legacy-provider
 RUN npm run build
 
-# ── Stage 2: Serve ───────────────────────────────────────────────────
+# Stage 2: serve it with nginx on Cloud Run's port
 FROM nginx:alpine AS runner
-
-# Copy built static files
-COPY --from=builder /app/build /usr/share/nginx/html
-
-# Copy nginx config
+COPY --from=builder /app/out /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Cloud Run requires port 8080
+COPY headers.inc /etc/nginx/conf.d/headers.inc
 EXPOSE 8080
-
 CMD ["nginx", "-g", "daemon off;"]

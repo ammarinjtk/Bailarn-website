@@ -7,6 +7,10 @@
 
 # build output
 /build
+/.next
+/out
+next-env.d.ts
+*.tsbuildinfo
 
 # testing
 /coverage
@@ -19,6 +23,7 @@
 .env.production.local
 
 # misc
+.claude/
 .DS_Store
 Thumbs.db
 

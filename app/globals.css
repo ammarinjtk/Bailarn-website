@@ -1,0 +1,83 @@
+@import 'tailwindcss';
+
+/* Galley proof: newsprint sheet, red proof ink for segmentation, blue pencil for labels. */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+:root {
+  --paper: #f2f4f1;
+  --sheet: #fbfcfa;
+  --ink: #1b1d22;
+  --mute: #5d656a;
+  --rule: #d5d9d4;
+  --red: #c94a2e;
+  --blue: #2f5bd3;
+  --mark: #fde7df;
+}
+
+[data-theme='dark'] {
+  --paper: #15181d;
+  --sheet: #1b1f25;
+  --ink: #e9ebe8;
+  --mute: #9aa3a6;
+  --rule: #2e343c;
+  --red: #f0795c;
+  --blue: #8aa6ff;
+  --mark: #3a2520;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-sheet: var(--sheet);
+  --color-ink: var(--ink);
+  --color-mute: var(--mute);
+  --color-rule: var(--rule);
+  --color-red: var(--red);
+  --color-blue: var(--blue);
+  --color-mark: var(--mark);
+  --font-display: var(--font-serif-thai), Georgia, serif;
+  --font-sans: var(--font-sarabun), system-ui, sans-serif;
+  --font-mono: var(--font-dm-mono), ui-monospace, monospace;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+/* A proofreader's word-break mark: a slanted red stroke between two words. */
+.cut {
+  display: inline-block;
+  width: 2px;
+  height: 0.95em;
+  margin: 0 0.3em;
+  background: var(--red);
+  transform: rotate(14deg);
+  vertical-align: -0.1em;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cut-drop {
+    transform: rotate(14deg) scaleY(0);
+    transform-origin: bottom;
+    animation: cut-drop 450ms cubic-bezier(0.3, 0.7, 0.2, 1) forwards;
+  }
+}
+
+@keyframes cut-drop {
+  to { transform: rotate(14deg) scaleY(1); }
+}
+
+/* Rawstroke art is black line on transparent; in dark mode invert it and turn the orange back. */
+[data-theme='dark'] .art {
+  filter: invert(0.92) hue-rotate(180deg);
+}
