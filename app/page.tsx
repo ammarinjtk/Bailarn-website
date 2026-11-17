@@ -5,7 +5,7 @@ import { TASKS, type Level } from '@/lib/tasks'
 import { PAPER } from '@/lib/paper'
 import Reader from '@/public/illustrations/search.webp'
 
-// Example per demo. Tokenizer and entity outputs are the live models' results; the rest show their input until those demos ship.
+// Example per demo. Outputs shown are the models' real results; embeddings and topics show their input only.
 const EXAMPLES: Record<string, React.ReactNode> = {
   tokenize: <ProofLine words={['นายก', 'รัฐมนตรี', 'เดินทาง', 'ไป', 'เชียงใหม่']} />,
   entities: (
@@ -14,8 +14,14 @@ const EXAMPLES: Record<string, React.ReactNode> = {
     </span>
   ),
   embeddings: <span lang="th">แม่ · พ่อ · เพื่อนบ้าน</span>,
-  pos: <span lang="th">เราจะไปเดินเล่นที่หนองคาย</span>,
-  sentiment: <span lang="th">อาหารอร่อย บริการดี จะกลับมาอีก</span>,
+  pos: (
+    <span lang="th" className="inline-flex flex-wrap gap-x-2 gap-y-1">
+      {[['เรา', 'PPER'], ['จะ', 'AUX'], ['ไป', 'VV'], ['เดิน', 'VV'], ['เล่น', 'VV'], ['ที่', 'P'], ['หนองคาย', 'NR']].map(([w, t]) => (
+        <span key={w + t} className="inline-flex flex-col items-center leading-tight">{w}<span className="font-mono text-[10px] text-blue">{t}</span></span>
+      ))}
+    </span>
+  ),
+  sentiment: <span lang="th">อาหารอร่อย บริการดี จะกลับมาอีก <span className="font-sans text-base text-green whitespace-nowrap">→ positive</span></span>,
   topics: <span lang="th">Asus Zenfone กับ Huawei nova อันไหนดีกว่ากัน</span>,
 }
 
