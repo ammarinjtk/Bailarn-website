@@ -3,50 +3,55 @@
 import { useState } from 'react'
 import ProofLine from '@/components/proof-line'
 import ModelStatus from '@/components/model-status'
-import { segment, type Word } from '@/lib/nlp/pipeline.ts'
+import DemoForm from '@/components/demo-form'
+import { segment, type CharLabel, type Word } from '@/lib/nlp/pipeline.ts'
 import { downloadBytes } from '@/lib/nlp/runtime.ts'
 import { useModels } from '@/lib/nlp/use-model.ts'
 
 const EXAMPLES = ['นายกรัฐมนตรีเดินทางไปเชียงใหม่', 'สวัสดีตอนเช้าเป็นยังไงบ้างครับ', 'ตากลม']
-const MAX = 200
 
 export default function TokenizeDemo() {
   const [text, setText] = useState(EXAMPLES[0])
-  const [words, setWords] = useState<Word[] | null>(null)
+  const [result, setResult] = useState<{ words: Word[]; chars: CharLabel[] } | null>(null)
   const { status, progress, error, run } = useModels(['tokenizer'])
   const busy = status === 'downloading' || status === 'running'
-  const empty = text.trim().length === 0
 
-  const analyse = async (input = text) => {
+  const analyse = async (input: string) => {
     const out = await run(([{ tf, model }]) => segment(tf, model, input))
-    if (out) setWords(out.words)
+    if (out) setResult(out)
   }
 
   return (
     <div className="flex flex-col gap-4">
-      <form className="flex flex-col gap-3" onSubmit={(e) => { e.preventDefault(); if (!empty) analyse() }}>
-        <label htmlFor="tokenize-input" className="font-mono text-xs uppercase tracking-[0.08em] text-mute">Thai text</label>
-        <textarea id="tokenize-input" lang="th" rows={2} maxLength={MAX} value={text} onChange={(e) => setText(e.target.value)}
-          className="font-display text-xl leading-relaxed bg-paper border border-rule rounded-sm px-3 py-2 focus:border-ink outline-none resize-y" />
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex flex-wrap gap-2">
-            {EXAMPLES.map((ex) => (
-              <button key={ex} type="button" lang="th" onClick={() => { setText(ex); analyse(ex) }} disabled={busy}
-                className="font-display text-sm px-2.5 py-1 border border-rule rounded-sm hover:border-ink disabled:opacity-50">{ex}</button>
-            ))}
-          </div>
-          <div className="flex items-center gap-3">
-            <span className="font-mono text-xs text-mute tabular-nums">{[...text].length} / {MAX}</span>
-            <button type="submit" disabled={busy || empty} className="h-10 px-5 rounded-sm bg-ink text-paper font-medium hover:bg-green disabled:opacity-40 disabled:hover:bg-ink">Segment</button>
-          </div>
-        </div>
-        {empty && <p className="text-sm text-mute">Type some Thai text to segment.</p>}
-      </form>
+      <DemoForm id="tokenize-input" label="Thai text" value={text} onChange={setText} examples={EXAMPLES}
+        onExample={(ex) => { setText(ex); analyse(ex) }} onSubmit={() => analyse(text)} busy={busy} max={200} action="Segment" />
       <ModelStatus status={status} progress={progress} error={error} size={downloadBytes('tokenizer')} />
-      {words && (
-        <output className="font-display text-2xl leading-[1.9] border-t border-rule pt-4" aria-live="polite">
-          <ProofLine words={words.map((w) => w.text)} />
-        </output>
+      {result && (
+        <div className="flex flex-col gap-4 border-t border-rule pt-4" aria-live="polite">
+          <output className="font-display text-2xl leading-[1.9]"><ProofLine words={result.words.map((w) => w.text)} /></output>
+          <details className="group">
+            <summary className="cursor-pointer font-mono text-xs uppercase tracking-[0.08em] text-mute hover:text-ink">What the model saw: one label per character</summary>
+            <div className="overflow-x-auto mt-3">
+              <table className="border-collapse tabular-nums">
+                <tbody>
+                  <tr>
+                    <th scope="row" className="pr-3 text-left font-mono text-[11px] font-normal text-mute">char</th>
+                    {result.chars.map((c, i) => <td key={i} lang="th" className={`px-1 text-center font-display text-xl ${c.label !== '·' ? 'bg-tint' : ''}`}>{c.char === ' ' ? '␣' : c.char}</td>)}
+                  </tr>
+                  <tr>
+                    <th scope="row" className="pr-3 text-left font-mono text-[11px] font-normal text-mute">id</th>
+                    {result.chars.map((c, i) => <td key={i} className="px-1 text-center font-mono text-[11px] text-mute">{c.id}</td>)}
+                  </tr>
+                  <tr>
+                    <th scope="row" className="pr-3 text-left font-mono text-[11px] font-normal text-mute">label</th>
+                    {result.chars.map((c, i) => <td key={i} className={`px-1 text-center font-mono text-[11px] ${c.label !== '·' ? 'bg-tint text-green' : 'text-mute'}`}>{c.label}</td>)}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-sm text-mute mt-2">A label other than · marks the last character of a word; the label itself is the word class the model guessed for that word.</p>
+          </details>
+        </div>
       )}
     </div>
   )
