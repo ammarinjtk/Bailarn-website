@@ -3,7 +3,7 @@ export default function Footer() {
     <footer className="border-t border-rule mt-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8 flex flex-col sm:flex-row gap-4 sm:items-end sm:justify-between text-sm text-mute">
         <div className="flex flex-col gap-1 max-w-xl">
-          <span>Bailarn, 2017–2018. Built by <a className="text-ink underline decoration-rule underline-offset-4 hover:decoration-red" href="https://www.ammarinjtk.com">Amarin Jettakul</a> at Chulalongkorn University.</span>
+          <span>Bailarn, 2017–2018. Built by <a className="text-ink underline decoration-rule underline-offset-4 hover:decoration-leaf" href="https://www.ammarinjtk.com">Amarin Jettakul</a> at Chulalongkorn University.</span>
           <span>Supported by the Department of Computer Engineering, Chulalongkorn University, and NECTEC.</span>
         </div>
         <div className="flex gap-5 font-mono text-[13px]">

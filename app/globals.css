@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 
-/* Galley proof: newsprint sheet, red proof ink for segmentation, blue pencil for labels. */
+/* Galley proof in the logo's greens: leaf for fills, stem for word-break marks, a darker green for text; blue pencil for labels. */
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 :root {
@@ -9,9 +9,11 @@
   --ink: #1b1d22;
   --mute: #5d656a;
   --rule: #d5d9d4;
-  --red: #c94a2e;
+  --leaf: #4caf50;
+  --stem: #388e3c;
+  --green: #2e7d32;
   --blue: #2f5bd3;
-  --mark: #fde7df;
+  --tint: #e3f1e3;
 }
 
 [data-theme='dark'] {
@@ -20,9 +22,11 @@
   --ink: #e9ebe8;
   --mute: #9aa3a6;
   --rule: #2e343c;
-  --red: #f0795c;
+  --leaf: #6cc070;
+  --stem: #58a85c;
+  --green: #7fcf83;
   --blue: #8aa6ff;
-  --mark: #3a2520;
+  --tint: #1f2e22;
   color-scheme: dark;
 }
 
@@ -32,9 +36,11 @@
   --color-ink: var(--ink);
   --color-mute: var(--mute);
   --color-rule: var(--rule);
-  --color-red: var(--red);
+  --color-leaf: var(--leaf);
+  --color-stem: var(--stem);
+  --color-green: var(--green);
   --color-blue: var(--blue);
-  --color-mark: var(--mark);
+  --color-tint: var(--tint);
   --font-display: var(--font-serif-thai), Georgia, serif;
   --font-sans: var(--font-sarabun), system-ui, sans-serif;
   --font-mono: var(--font-dm-mono), ui-monospace, monospace;
@@ -54,13 +60,13 @@ h1, h2, h3 {
   outline-offset: 2px;
 }
 
-/* A proofreader's word-break mark: a slanted red stroke between two words. */
+/* A proofreader's word-break mark: a slanted stroke, in the logo's stem green, between two words. */
 .cut {
   display: inline-block;
   width: 2px;
   height: 0.95em;
   margin: 0 0.3em;
-  background: var(--red);
+  background: var(--stem);
   transform: rotate(14deg);
   vertical-align: -0.1em;
 }
@@ -77,7 +83,7 @@ h1, h2, h3 {
   to { transform: rotate(14deg) scaleY(1); }
 }
 
-/* Rawstroke art is black line on transparent; in dark mode invert it and turn the orange back. */
+/* Rawstroke art is black line on transparent; in dark mode invert it and turn the green back. */
 [data-theme='dark'] .art {
   filter: invert(0.92) hue-rotate(180deg);
 }

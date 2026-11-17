@@ -1,10 +1,12 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { TASKS } from '@/lib/tasks'
 import ThemeToggle from './theme-toggle'
+import Leaf from '@/public/leaf.png'
 
 export default function Nav() {
   const path = usePathname()
@@ -20,14 +22,15 @@ export default function Nav() {
 
   const linkClass = (slug: string) => {
     const on = path?.startsWith(`/${slug}`)
-    return `font-mono text-[13px] py-1 border-b-2 transition-colors ${on ? 'text-ink border-red' : 'text-mute border-transparent hover:text-ink'}`
+    return `font-mono text-[13px] py-1 border-b-2 transition-colors ${on ? 'text-ink border-stem' : 'text-mute border-transparent hover:text-ink'}`
   }
 
   return (
     <header className="border-b border-rule">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 h-16 flex items-center justify-between gap-6">
-        <Link href="/" className="font-display font-bold text-xl leading-none whitespace-nowrap" lang="th">
-          ใบ<span className="text-red">ลาน</span> <span className="font-sans font-medium text-base text-mute">Bailarn</span>
+        <Link href="/" className="flex items-center gap-2 font-display font-bold text-xl leading-none whitespace-nowrap" lang="th">
+          <Image src={Leaf} alt="" width={28} height={28} priority />
+          <span>ใบ<span className="text-green">ลาน</span></span> <span className="font-sans font-medium text-base text-mute">Bailarn</span>
         </Link>
         <nav aria-label="Demos" className="hidden md:flex items-center gap-5">
           {TASKS.map((t) => <Link key={t.slug} href={`/${t.slug}/`} className={linkClass(t.slug)}>{t.nav}</Link>)}

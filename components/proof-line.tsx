@@ -1,4 +1,4 @@
-// A Thai sentence set as a proof, with a red word-break mark between each word.
+// A Thai sentence set as a proof, with a green word-break mark between each word.
 export default function ProofLine({ words, animate = false, className = '' }: { words: string[]; animate?: boolean; className?: string }) {
   return (
     <span lang="th" className={className}>

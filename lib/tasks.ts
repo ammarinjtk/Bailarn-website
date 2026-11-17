@@ -1,6 +1,10 @@
-// One entry per demo. Order is the order on the home page and in the nav.
+// One entry per demo, ordered lexical → syntactic → semantic; the home page and nav follow this order.
 // score: published result on the BEST2010_I2R test set (Bailarn-python-library README); null where none was reported.
+// level: the linguistic level the task works at. Lexical and syntactic follow the JCSSE 2018 paper's framing.
+export type Level = 'Lexical' | 'Syntactic' | 'Semantic'
+
 export type Task = {
+  level: Level
   slug: string
   nav: string
   title: string
@@ -13,6 +17,7 @@ export type Task = {
 export const TASKS: Task[] = [
   {
     slug: 'tokenize',
+    level: 'Lexical',
     nav: 'Tokenize',
     title: 'Word segmentation',
     thai: 'ตัดคำ',
@@ -21,7 +26,18 @@ export const TASKS: Task[] = [
     score: 'F1 98.58%',
   },
   {
+    slug: 'pos',
+    level: 'Syntactic',
+    nav: 'POS',
+    title: 'Part-of-speech tags',
+    thai: 'ชนิดของคำ',
+    blurb: 'Labels each word with one of 34 word classes: noun, verb, classifier, particle and so on.',
+    model: 'Word embedding + Bi-LSTM',
+    score: 'F1 95.48% micro, 82.41% macro',
+  },
+  {
     slug: 'entities',
+    level: 'Syntactic',
     nav: 'Entities',
     title: 'Named entities',
     thai: 'ชื่อเฉพาะ',
@@ -31,6 +47,7 @@ export const TASKS: Task[] = [
   },
   {
     slug: 'embeddings',
+    level: 'Semantic',
     nav: 'Embeddings',
     title: 'Word similarity',
     thai: 'ความใกล้ของคำ',
@@ -39,16 +56,8 @@ export const TASKS: Task[] = [
     score: null,
   },
   {
-    slug: 'pos',
-    nav: 'POS',
-    title: 'Part-of-speech tags',
-    thai: 'ชนิดของคำ',
-    blurb: 'Labels each word with one of 34 word classes: noun, verb, classifier, particle and so on.',
-    model: 'Word embedding + Bi-LSTM',
-    score: 'F1 95.48% micro, 82.41% macro',
-  },
-  {
     slug: 'sentiment',
+    level: 'Semantic',
     nav: 'Sentiment',
     title: 'Review sentiment',
     thai: 'ความรู้สึก',
@@ -58,6 +67,7 @@ export const TASKS: Task[] = [
   },
   {
     slug: 'topics',
+    level: 'Semantic',
     nav: 'Topics',
     title: 'Topic labels',
     thai: 'หมวดหมู่',

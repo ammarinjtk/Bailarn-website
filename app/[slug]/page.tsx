@@ -20,7 +20,7 @@ export default async function TaskPage({ params }: { params: Promise<{ slug: str
   return (
     <div className="mx-auto max-w-6xl px-4 sm:px-6 pt-10 sm:pt-14 flex flex-col gap-8">
       <header className="flex flex-col gap-3 max-w-3xl">
-        <p className="font-mono text-xs uppercase tracking-[0.12em] text-mute">{task.model}</p>
+        <p className="font-mono text-xs uppercase tracking-[0.12em] text-green">{task.level} · {task.model}</p>
         <h1 className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
           <span className="text-3xl sm:text-4xl font-semibold">{task.title}</span>
           <span className="font-display text-2xl text-mute" lang="th">{task.thai}</span>
