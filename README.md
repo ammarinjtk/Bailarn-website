@@ -1,6 +1,6 @@
 ## Bailarn website
 
-Thai NLP demos from the Bailarn master's thesis (Chulalongkorn University, 2017–2018), live at
+Thai NLP demos from Bailarn, a bachelor's senior project in Computer Engineering (Chulalongkorn University, 2017–2018), live at
 https://bailarn.ammarinjtk.com. Every model runs in the visitor's browser with TensorFlow.js; nothing is sent to a server.
 
 | Page | Task | Model |

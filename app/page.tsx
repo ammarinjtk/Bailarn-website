@@ -98,7 +98,7 @@ export default function Home() {
         <div className="flex flex-col gap-4">
           <h2 id="research-title" className="text-2xl font-semibold">The research</h2>
           <p className="max-w-[62ch]">
-            Bailarn was a master&apos;s thesis in Computer Engineering at Chulalongkorn University, 2017–2018. Deep learning
+            Bailarn was a bachelor&apos;s senior project in Computer Engineering at Chulalongkorn University, 2017–2018. Deep learning
             already worked well for English, while Thai, a low-resource language, had few tools and little shared data.
           </p>
           <p className="max-w-[62ch]">
