@@ -16,6 +16,9 @@ export const downloadBytes = (name: ModelName) => sizes[name].weights + sizes[na
 
 function loadTf(): Promise<TF> {
   tfPromise ??= import('@tensorflow/tfjs').then(async (tf) => {
+    // These are small recurrent and convolutional models. On WebGL every LSTM timestep is a round of tiny GPU kernels,
+    // which took 14 s for one 30-character sentence on an M3; the CPU backend does the same in well under a second.
+    await tf.setBackend('cpu')
     await tf.ready()
     return tf
   })
@@ -75,8 +78,14 @@ export function loadModel(name: ModelName, onProgress?: (p: Progress) => void): 
   return promise
 }
 
-/** Lets the browser paint a "working" state before a model call blocks the main thread. */
-export async function nextFrame(): Promise<void> {
-  const tf = await loadTf()
-  await tf.nextFrame()
+/** Lets the browser paint a "working" state before a model call blocks the main thread.
+ *  Capped at 50 ms: a background tab gets no animation frames, and the run must not wait for the visitor to come back. */
+export function nextFrame(): Promise<void> {
+  return new Promise((resolve) => {
+    const timer = setTimeout(resolve, 50)
+    requestAnimationFrame(() => {
+      clearTimeout(timer)
+      setTimeout(resolve, 0)
+    })
+  })
 }
