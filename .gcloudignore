@@ -1,4 +1,12 @@
+# Uploaded by the source deploy; mirrors .dockerignore but keeps models/, which the image build converts.
 .git
+.claude
 node_modules
+.next
+out
 build
+models/keyword_expansion
+public/models
+lib/nlp/model-sizes.json
+tests
 .DS_Store
