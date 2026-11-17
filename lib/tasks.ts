@@ -6,7 +6,7 @@ export type Level = 'Lexical' | 'Syntactic' | 'Semantic'
 export type Task = {
   level: Level
   slug: string
-  nav: string
+  nav: string // the usual short form of the title, for the desktop nav
   title: string
   thai: string
   blurb: string
@@ -18,7 +18,7 @@ export const TASKS: Task[] = [
   {
     slug: 'tokenize',
     level: 'Lexical',
-    nav: 'Tokenize',
+    nav: 'Segmentation',
     title: 'Word segmentation',
     thai: 'ตัดคำ',
     blurb: 'Thai is written without spaces between words. The tokenizer reads character by character and marks where each word ends.',
@@ -28,8 +28,8 @@ export const TASKS: Task[] = [
   {
     slug: 'pos',
     level: 'Syntactic',
-    nav: 'POS',
-    title: 'Part-of-speech tags',
+    nav: 'POS tagging',
+    title: 'Part-of-speech tagging',
     thai: 'ชนิดของคำ',
     blurb: 'Labels each word with one of 34 word classes: noun, verb, classifier, particle and so on.',
     model: 'Word embedding + Bi-LSTM',
@@ -38,8 +38,8 @@ export const TASKS: Task[] = [
   {
     slug: 'entities',
     level: 'Syntactic',
-    nav: 'Entities',
-    title: 'Named entities',
+    nav: 'NER',
+    title: 'Named entity recognition',
     thai: 'ชื่อเฉพาะ',
     blurb: 'Finds people, places, organisations, dates and measurements, and labels each one with its type.',
     model: 'Word embedding + Bi-LSTM',
@@ -49,8 +49,8 @@ export const TASKS: Task[] = [
     slug: 'embeddings',
     level: 'Semantic',
     nav: 'Embeddings',
-    title: 'Word similarity',
-    thai: 'ความใกล้ของคำ',
+    title: 'Word embeddings',
+    thai: 'เวกเตอร์คำ',
     blurb: 'Scores how close two words are in meaning, from vectors learned on Thai text.',
     model: 'Skip-gram word vectors',
     score: null,
@@ -59,7 +59,7 @@ export const TASKS: Task[] = [
     slug: 'sentiment',
     level: 'Semantic',
     nav: 'Sentiment',
-    title: 'Review sentiment',
+    title: 'Sentiment analysis',
     thai: 'ความรู้สึก',
     blurb: 'Reads a short restaurant review and says whether it is positive or negative.',
     model: 'Convolutional network, 3 filter widths',
@@ -68,9 +68,9 @@ export const TASKS: Task[] = [
   {
     slug: 'topics',
     level: 'Semantic',
-    nav: 'Topics',
-    title: 'Topic labels',
-    thai: 'หมวดหมู่',
+    nav: 'Classification',
+    title: 'Multi-label text classification',
+    thai: 'จัดหมวดหมู่ข้อความ',
     blurb: 'Suggests which of 38 tags from Pantip\'s mobile phone forum fit a post. A post can have several.',
     model: 'Convolutional network, multi-label',
     score: null,

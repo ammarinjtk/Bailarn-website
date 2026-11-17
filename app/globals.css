@@ -90,3 +90,18 @@ h1, h2, h3 {
 [data-theme='dark'] .art {
   filter: invert(0.92) hue-rotate(180deg);
 }
+
+/* Loading: a sweep across a progress bar, an indeterminate bar while a model runs, and a button spinner. */
+@keyframes sweep {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(250%); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .animate-sweep { animation: sweep 1.3s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+  .animate-spin-slow { animation: spin 0.8s linear infinite; }
+}

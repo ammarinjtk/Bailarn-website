@@ -31,7 +31,7 @@ export default function PosDemo() {
         onExample={(ex) => { setText(ex); analyse(ex) }} onSubmit={() => analyse(text)} busy={busy} max={200} action="Tag words" />
       <ModelStatus status={status} progress={progress} error={error} size={downloadBytes('tokenizer') + downloadBytes('pos')} />
       {words && (
-        <div className="flex flex-col gap-3 border-t border-rule pt-4" aria-live="polite">
+        <div className={`flex flex-col gap-3 border-t border-rule pt-4 transition-opacity ${busy ? 'opacity-40' : ''}`} aria-live="polite">
           <ol className="flex flex-wrap gap-x-1 gap-y-3">
             {words.map((w, i) => (
               <li key={i} className="flex flex-col items-center px-1.5" title={[POS_FAMILY_OF[w.tag ?? ''], DESCRIBE[w.tag ?? '']].filter(Boolean).join(': ')}>

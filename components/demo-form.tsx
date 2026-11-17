@@ -1,5 +1,7 @@
 'use client'
 
+import Spinner from './spinner'
+
 // The shared input row of every demo: a text field, example buttons, a character count and the run button.
 export default function DemoForm({ id, label, value, onChange, examples, onExample, onSubmit, busy, max, action, rows = 2 }: {
   id: string
@@ -29,7 +31,10 @@ export default function DemoForm({ id, label, value, onChange, examples, onExamp
         </div>
         <div className="flex items-center gap-3">
           <span className="font-mono text-xs text-mute tabular-nums">{[...value].length} / {max}</span>
-          <button type="submit" disabled={busy || empty} className="h-10 px-5 rounded-sm bg-ink text-paper font-medium hover:bg-green disabled:opacity-40 disabled:hover:bg-ink">{action}</button>
+          <button type="submit" disabled={busy || empty} aria-busy={busy}
+            className="h-10 px-5 inline-flex items-center gap-2 rounded-sm bg-ink text-paper font-medium hover:bg-green disabled:hover:bg-ink disabled:cursor-not-allowed disabled:opacity-40 aria-busy:opacity-80">
+            {busy && <Spinner />}{busy ? 'Working…' : action}
+          </button>
         </div>
       </div>
       {empty && <p className="text-sm text-mute">Type some Thai text first.</p>}

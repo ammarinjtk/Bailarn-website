@@ -27,7 +27,7 @@ export default function TokenizeDemo() {
         onExample={(ex) => { setText(ex); analyse(ex) }} onSubmit={() => analyse(text)} busy={busy} max={200} action="Segment" />
       <ModelStatus status={status} progress={progress} error={error} size={downloadBytes('tokenizer')} />
       {result && (
-        <div className="flex flex-col gap-4 border-t border-rule pt-4" aria-live="polite">
+        <div className={`flex flex-col gap-4 border-t border-rule pt-4 transition-opacity ${busy ? 'opacity-40' : ''}`} aria-live="polite">
           <output className="font-display text-2xl leading-[1.9]"><ProofLine words={result.words.map((w) => w.text)} /></output>
           <details className="group">
             <summary className="cursor-pointer font-mono text-xs uppercase tracking-[0.08em] text-mute hover:text-ink">What the model saw: one label per character</summary>

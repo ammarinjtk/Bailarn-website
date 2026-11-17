@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import ModelStatus from '@/components/model-status'
+import Spinner from '@/components/spinner'
 import { similarity } from '@/lib/nlp/pipeline.ts'
 import { downloadBytes } from '@/lib/nlp/runtime.ts'
 import { useModels } from '@/lib/nlp/use-model.ts'
@@ -51,13 +52,16 @@ export default function EmbeddingsDemo() {
                 className="font-display text-sm px-2.5 py-1 border border-rule rounded-sm hover:border-ink disabled:opacity-50">{ex.join(' · ')}</button>
             ))}
           </div>
-          <button type="submit" disabled={busy || missing >= 0} className="h-10 px-5 rounded-sm bg-ink text-paper font-medium hover:bg-green disabled:opacity-40 disabled:hover:bg-ink">Compare</button>
+          <button type="submit" disabled={busy || missing >= 0} aria-busy={busy}
+            className="h-10 px-5 inline-flex items-center gap-2 rounded-sm bg-ink text-paper font-medium hover:bg-green disabled:hover:bg-ink disabled:cursor-not-allowed disabled:opacity-40 aria-busy:opacity-80">
+            {busy && <Spinner />}{busy ? 'Working…' : 'Compare'}
+          </button>
         </div>
       </form>
       <ModelStatus status={status} progress={progress} error={error} size={downloadBytes('word_embedder')} />
       {status === 'idle' && <p className="text-sm text-mute">This is the largest model on the site. On mobile data, Wi-Fi is a good idea.</p>}
       {pairs && (
-        <ul className="flex flex-col gap-3 border-t border-rule pt-4" aria-live="polite">
+        <ul className={`flex flex-col gap-3 border-t border-rule pt-4 transition-opacity ${busy ? 'opacity-40' : ''}`} aria-live="polite">
           {pairs.map((p) => (
             <li key={p.a + p.b} className="grid grid-cols-[minmax(0,11rem)_1fr_auto] items-center gap-3">
               <span lang="th" className="font-display text-lg truncate">{p.a} ↔ {p.b}</span>

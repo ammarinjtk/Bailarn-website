@@ -35,7 +35,7 @@ export default function TopicsDemo() {
         onExample={(ex) => { setText(ex); analyse(ex) }} onSubmit={() => analyse(text)} busy={busy} max={800} rows={3} action="Suggest tags" />
       <ModelStatus status={status} progress={progress} error={error} size={downloadBytes('tokenizer') + downloadBytes('categorization')} />
       {result && (
-        <div className="flex flex-col gap-3 border-t border-rule pt-4" aria-live="polite">
+        <div className={`flex flex-col gap-3 border-t border-rule pt-4 transition-opacity ${busy ? 'opacity-40' : ''}`} aria-live="polite">
           <h3 className="font-mono text-xs uppercase tracking-[0.08em] text-mute">The model&apos;s {SHOW} most likely tags</h3>
           <ol className="flex flex-col gap-2 max-w-lg">
             {result.map((t) => (

@@ -32,7 +32,7 @@ export default function SentimentDemo() {
         onExample={(ex) => { setText(ex); analyse(ex) }} onSubmit={() => analyse(text)} busy={busy} max={400} rows={3} action="Read the tone" />
       <ModelStatus status={status} progress={progress} error={error} size={downloadBytes('tokenizer') + downloadBytes('sentiment')} />
       {result && top && (
-        <div className="flex flex-col gap-3 border-t border-rule pt-4" aria-live="polite">
+        <div className={`flex flex-col gap-3 border-t border-rule pt-4 transition-opacity ${busy ? 'opacity-40' : ''}`} aria-live="polite">
           <output className="text-2xl font-semibold">{LABEL[top.label]} <span className="font-mono text-base font-normal text-mute">{(top.p * 100).toFixed(0)}%</span></output>
           <ul className="flex flex-col gap-2 max-w-md">
             {result.scores.map((s) => (

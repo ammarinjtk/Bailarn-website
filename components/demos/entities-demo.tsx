@@ -32,7 +32,7 @@ export default function EntitiesDemo() {
         onExample={(ex) => { setText(ex); analyse(ex) }} onSubmit={() => analyse(text)} busy={busy} max={200} action="Find entities" />
       <ModelStatus status={status} progress={progress} error={error} size={downloadBytes('tokenizer') + downloadBytes('ner')} />
       {result && (
-        <div className="flex flex-col gap-4 border-t border-rule pt-4" aria-live="polite">
+        <div className={`flex flex-col gap-4 border-t border-rule pt-4 transition-opacity ${busy ? 'opacity-40' : ''}`} aria-live="polite">
           <output lang="th" className="font-display text-2xl leading-[2.1]">
             {result.spans.map((s, i) =>
               typeof s === 'string' ? <span key={i}>{s}</span> : (

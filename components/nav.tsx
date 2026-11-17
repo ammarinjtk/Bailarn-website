@@ -50,7 +50,7 @@ export default function Nav() {
           {TASKS.map((t) => (
             <li key={t.slug}>
               <Link href={`/${t.slug}/`} className="flex items-baseline justify-between py-3 border-b border-rule">
-                <span className="font-medium">{t.nav}</span>
+                <span className="font-medium">{t.title}</span>
                 <span className="font-display text-sm text-mute" lang="th">{t.thai}</span>
               </Link>
             </li>
